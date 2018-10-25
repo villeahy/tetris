@@ -1,17 +1,13 @@
 <template>
   <div>
-    {{ msg }}
+    <h1>Welcome to main page</h1>
+    <router-link to='/tetris'>Tetris</router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+  name: 'HelloWorld'
 }
 </script>
 
