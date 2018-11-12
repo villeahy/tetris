@@ -10,9 +10,10 @@ export const gameBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
+
+/*
 let currentI = 0
 let currentcolumn = 4
-
 function print() {
   console.log('******')
   console.log(gameBoard.join('\n'))
@@ -46,7 +47,7 @@ function move() {
       newBlock()
       break
     case 2:
-      if (currentI === 0) thgameBoard Error('Game OVer')
+      if (currentI === 0) throw Error('Game OVer')
       gameBoard[currentcolumn][currentI] = 2
       currentI = 0
       newBlock()
@@ -57,11 +58,4 @@ function move() {
       currentI++
   }
 }
-
-print()
-goLeft()
-move()
-goLeft()
-move()
-goRight()
-print()
+*/

@@ -1,21 +1,26 @@
 <template>
   <div>
     <h1>This is tetris</h1>
-    <router-link to='/'>Hello</router-link>
+    <button v-on:click="goLeft">press re</button>
   </div>
 </template>
 
 <script>
-import { gameBoard } from './tetris'
+import { gameBoard } from './tetris.js'
 
 export default {
   name: 'tetris',
   data: function() {
     return {
-      gameBoard,
+      gameBoard: gameBoard,
       currentI: 0,
       currentcolumn: 4
     }
+  },
+  mounted: function() {
+    document.addEventListener('keydown', e => {
+      console.log(e, 'whoop')
+    })
   },
   methods: {
     newBlock: function() {
@@ -40,14 +45,13 @@ export default {
         case undefined:
           this.gameBoard[this.currentcolumn][this.currentI] = 2
           this.currentI = 0
-          newBlock()
+          this.newBlock()
           break
         case 2:
-          if (currentI === 0) return
-          //Do something here....
+          if (this.currentI === 0) return // Do something here....
           this.gameBoard[this.currentcolumn][this.currentI] = 2
           this.currentI = 0
-          newBlock()
+          this.newBlock()
           break
         default:
           this.gameBoard[this.currentcolumn][this.currentI] = 0
