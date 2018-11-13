@@ -1,15 +1,19 @@
 <template>
   <div>
     <h1>This is tetris</h1>
-    <button v-on:click="goLeft">press re</button>
+    <router-link to='/'>Hello</router-link>
+    <p>{{ currentI }} {{ currentcolumn}}</p>
+    <div class="block" :key="i" v-for="(row, i) in gameBoard">
+      <div v-for="(cell, index) in row" :key="index">{{ cell }}</div>
+    </div>
   </div>
 </template>
 
 <script>
-import { gameBoard } from './tetris.js'
+import { gameBoard } from './atetris.js'
 
 export default {
-  name: 'tetris',
+  name: 'Tetris',
   data: function() {
     return {
       gameBoard: gameBoard,
@@ -18,11 +22,27 @@ export default {
     }
   },
   mounted: function() {
-    document.addEventListener('keydown', e => {
-      console.log(e, 'whoop')
-    })
+    document.addEventListener('keydown', this.mainHandler)
+  },
+  destroyed: function() {
+    document.removeEventListener('keydown', this.mainHandler)
   },
   methods: {
+    mainHandler: function(e) {
+      console.log(e.code)
+      switch (e.code) {
+        case 'ArrowLeft':
+          this.goLeft()
+          break
+        case 'ArrowRight':
+          this.goRight()
+          break
+        case 'ArrowDown':
+          this.move()
+          break
+        default:
+      }
+    },
     newBlock: function() {
       this.gameBoard[this.currentcolumn][0] = 1
     },
@@ -69,7 +89,7 @@ export default {
   width: 2rem;
   border: 1px solid black;
 }
-.line {
+.block {
   display: inline-block;
 }
 </style>
