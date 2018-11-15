@@ -132,14 +132,15 @@ export default {
       }
     },
     moveDown: function() {
-      const currentBoard = [...this.gameBoard]
       this.block.forEach(obj => {
-        currentBoard[obj.y][obj.i] = 0
+        this.gameBoard[obj.y][obj.i] = 0
       })
-      this.gameBoard = currentBoard
       this.block = this.block.map(obj => ({ ...obj, i: obj.i + 1 }))
     },
     moveSide: function(value) {
+      this.block.forEach(obj => {
+        this.gameBoard[obj.y][obj.i] = 0
+      })
       this.block = this.block.map(obj => ({ ...obj, y: obj.y + value }))
     },
     checkLeft: function(acc, obj) {
@@ -163,12 +164,9 @@ export default {
       this.moveSide(1)
     },
     setValues: function() {
-      const newBoard = [...this.gameBoard]
-      console.log(newBoard)
       this.block.forEach(obj => {
-        newBoard[obj.y][obj.i] = 2
+        this.gameBoard[obj.y][obj.i] = 2
       })
-      this.gameBoard = newBoard
     },
     downReducer: function(acc, obj) {
       if (obj.i < 0) return acc
