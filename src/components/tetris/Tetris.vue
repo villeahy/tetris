@@ -24,11 +24,12 @@ export default {
   data: function() {
     return {
       gameBoard: gameBoard,
-      block: [{ i: -1, y: 4 }, { i: 0, y: 4 }, { i: -1, y: 5 }, { i: 0, y: 5 }]
+      block: []
     }
   },
   mounted: function() {
     document.addEventListener('keydown', this.mainHandler)
+    this.newBlock()
   },
   destroyed: function() {
     document.removeEventListener('keydown', this.mainHandler)
@@ -63,12 +64,72 @@ export default {
       }
     },
     newBlock: function() {
-      this.block = [
-        { i: 0, y: 4 },
-        { i: -1, y: 4 },
-        { i: 0, y: 5 },
-        { i: -1, y: 5 }
-      ]
+      switch (Math.floor(Math.random() * 7)) {
+        case 0:
+          this.block = [
+            { i: 0, y: 4 },
+            { i: -1, y: 4 },
+            { i: 0, y: 5 },
+            { i: -1, y: 5 }
+          ]
+          break
+        case 1:
+          this.block = [
+            { i: -2, y: 4 },
+            { i: -1, y: 4 },
+            { i: 0, y: 4 },
+            { i: 0, y: 5 }
+          ]
+          break
+        case 2:
+          this.block = [
+            { i: -2, y: 5 },
+            { i: -1, y: 5 },
+            { i: 0, y: 4 },
+            { i: 0, y: 5 }
+          ]
+          break
+        case 3:
+          this.block = [
+            { i: -1, y: 4 },
+            { i: -1, y: 5 },
+            { i: 0, y: 5 },
+            { i: 0, y: 6 }
+          ]
+          break
+        case 4:
+          this.block = [
+            { i: -1, y: 5 },
+            { i: -1, y: 6 },
+            { i: 0, y: 4 },
+            { i: 0, y: 5 }
+          ]
+          break
+        case 5:
+          this.block = [
+            { i: -3, y: 4 },
+            { i: -2, y: 4 },
+            { i: -1, y: 4 },
+            { i: 0, y: 4 }
+          ]
+          break
+        case 6:
+          this.block = [
+            { i: -2, y: 4 },
+            { i: -1, y: 4 },
+            { i: -1, y: 5 },
+            { i: 0, y: 4 }
+          ]
+          break
+        default:
+          this.block = [
+            { i: 0, y: 4 },
+            { i: -1, y: 4 },
+            { i: 0, y: 5 },
+            { i: -1, y: 5 }
+          ]
+          break
+      }
     },
     moveDown: function() {
       const currentBoard = [...this.gameBoard]
@@ -110,6 +171,7 @@ export default {
       this.gameBoard = newBoard
     },
     downReducer: function(acc, obj) {
+      if (obj.i < 0) return acc
       if (typeof this.gameBoard[obj.y][obj.i + 1] === 'undefined') return 1
       if (this.gameBoard[obj.y][obj.i + 1] === 2) return 1
       return acc
