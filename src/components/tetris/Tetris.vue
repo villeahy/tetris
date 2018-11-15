@@ -1,9 +1,8 @@
 <template>
   <div>
     <h1>This is tetris</h1>
-    <router-link to='/'>Hello</router-link>
-    <p>{{ currentI }} {{ currentcolumn}}</p>
-    <div class="block" :key="i" v-for="(row, i) in gameBoard">
+    <router-link to='/'>Hello</router-link><br />
+    <div class="block" :key="i" v-for="(row, i) in renderedGameBoard">
       <div v-for="(cell, index) in row" :key="index">{{ cell }}</div>
     </div>
   </div>
@@ -11,14 +10,21 @@
 
 <script>
 import { gameBoard } from './atetris.js'
+function rightReducer(acc, block) {
+  if (block.y === 9) return false
+  return acc
+}
+function leftReducer(acc, block) {
+  if (block.y === 0) return true
+  return acc
+}
 
 export default {
   name: 'Tetris',
   data: function() {
     return {
       gameBoard: gameBoard,
-      currentI: 0,
-      currentcolumn: 4
+      block: [{ i: -1, y: 4 }, { i: 0, y: 4 }, { i: -1, y: 5 }, { i: 0, y: 5 }]
     }
   },
   mounted: function() {
@@ -26,6 +32,19 @@ export default {
   },
   destroyed: function() {
     document.removeEventListener('keydown', this.mainHandler)
+  },
+  computed: {
+    renderedGameBoard: function() {
+      const currentBoard = [...this.gameBoard]
+      this.block.forEach(obj => {
+        if (obj.i >= 0) {
+          if (currentBoard[obj.y][obj.i] !== 2) {
+            currentBoard[obj.y][obj.i] = 1
+          }
+        }
+      })
+      return currentBoard
+    }
   },
   methods: {
     mainHandler: function(e) {
@@ -44,39 +63,71 @@ export default {
       }
     },
     newBlock: function() {
-      this.gameBoard[this.currentcolumn][0] = 1
+      this.block = [
+        { i: 0, y: 4 },
+        { i: -1, y: 4 },
+        { i: 0, y: 5 },
+        { i: -1, y: 5 }
+      ]
+    },
+    moveDown: function() {
+      const currentBoard = [...this.gameBoard]
+      this.block.forEach(obj => {
+        currentBoard[obj.y][obj.i] = 0
+      })
+      this.gameBoard = currentBoard
+      this.block = this.block.map(obj => ({ ...obj, i: obj.i + 1 }))
+    },
+    moveSide: function(value) {
+      this.block = this.block.map(obj => ({ ...obj, y: obj.y + value }))
+    },
+    checkLeft: function(acc, obj) {
+      if (obj.i < 0) return acc
+      if (this.gameBoard[obj.y - 1][obj.i] === 2) return true
+      return acc
+    },
+    checkRight: function(acc, obj) {
+      if (obj.i < 0) return acc
+      if (this.gameBoard[obj.y + 1][obj.i] === 2) return true
+      return acc
     },
     goLeft: function() {
-      if (this.currentcolumn === 0) return
-      if (this.gameBoard[this.currentcolumn - 1][this.currentI] === 2) return
-      this.gameBoard[this.currentcolumn][this.currentI] = 0
-      this.gameBoard[this.currentcolumn - 1][this.currentI] = 1
-      this.currentcolumn--
+      if (this.block.reduce(leftReducer, false)) return
+      if (this.block.reduce(this.checkLeft, false)) return
+      this.moveSide(-1)
     },
     goRight: function() {
-      if (this.currentcolumn === 9) return
-      if (this.gameBoard[this.currentcolumn + 1][this.currentI] === 2) return
-      this.gameBoard[this.currentcolumn][this.currentI] = 0
-      this.gameBoard[this.currentcolumn + 1][this.currentI] = 1
-      this.currentcolumn++
+      if (this.block.reduce(rightReducer, false)) return
+      if (this.block.reduce(this.checkRight, false)) return
+      this.moveSide(1)
+    },
+    setValues: function() {
+      const newBoard = [...this.gameBoard]
+      console.log(newBoard)
+      this.block.forEach(obj => {
+        newBoard[obj.y][obj.i] = 2
+      })
+      this.gameBoard = newBoard
+    },
+    downReducer: function(acc, obj) {
+      if (typeof this.gameBoard[obj.y][obj.i + 1] === 'undefined') return 1
+      if (this.gameBoard[obj.y][obj.i + 1] === 2) return 1
+      return acc
     },
     move: function() {
-      switch (this.gameBoard[this.currentcolumn][this.currentI + 1]) {
-        case undefined:
-          this.gameBoard[this.currentcolumn][this.currentI] = 2
-          this.currentI = 0
+      const value = this.block.reduce(this.downReducer, 2)
+      console.log(value)
+      switch (value) {
+        case 1:
+          this.setValues()
           this.newBlock()
           break
         case 2:
-          if (this.currentI === 0) return // Do something here....
-          this.gameBoard[this.currentcolumn][this.currentI] = 2
-          this.currentI = 0
-          this.newBlock()
+          this.moveDown()
           break
         default:
-          this.gameBoard[this.currentcolumn][this.currentI] = 0
-          this.gameBoard[this.currentcolumn][this.currentI + 1] = 1
-          this.currentI++
+          this.moveDown()
+          break
       }
     }
   }
