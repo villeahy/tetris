@@ -3,7 +3,7 @@
     <h1>This is tetris</h1>
     <router-link to='/'>Hello</router-link><br />
     <div class="block" :key="i" v-for="(row, i) in renderedGameBoard">
-      <div v-for="(cell, index) in row" :key="index">{{ cell }}</div>
+      <div class="field" v-for="(cell, index) in row" :key="index">{{ cell }}</div>
     </div>
   </div>
 </template>
@@ -24,12 +24,11 @@ export default {
   data: function() {
     return {
       gameBoard: gameBoard,
-      block: []
+      block: [{ i: -1, y: 4 }, { i: 0, y: 4 }, { i: -1, y: 5 }, { i: 0, y: 5 }]
     }
   },
   mounted: function() {
     document.addEventListener('keydown', this.mainHandler)
-    this.newBlock()
   },
   destroyed: function() {
     document.removeEventListener('keydown', this.mainHandler)
@@ -64,72 +63,12 @@ export default {
       }
     },
     newBlock: function() {
-      switch (Math.floor(Math.random() * 7)) {
-        case 0:
-          this.block = [
-            { i: 0, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 5 },
-            { i: -1, y: 5 }
-          ]
-          break
-        case 1:
-          this.block = [
-            { i: -2, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 4 },
-            { i: 0, y: 5 }
-          ]
-          break
-        case 2:
-          this.block = [
-            { i: -2, y: 5 },
-            { i: -1, y: 5 },
-            { i: 0, y: 4 },
-            { i: 0, y: 5 }
-          ]
-          break
-        case 3:
-          this.block = [
-            { i: -1, y: 4 },
-            { i: -1, y: 5 },
-            { i: 0, y: 5 },
-            { i: 0, y: 6 }
-          ]
-          break
-        case 4:
-          this.block = [
-            { i: -1, y: 5 },
-            { i: -1, y: 6 },
-            { i: 0, y: 4 },
-            { i: 0, y: 5 }
-          ]
-          break
-        case 5:
-          this.block = [
-            { i: -3, y: 4 },
-            { i: -2, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 4 }
-          ]
-          break
-        case 6:
-          this.block = [
-            { i: -2, y: 4 },
-            { i: -1, y: 4 },
-            { i: -1, y: 5 },
-            { i: 0, y: 4 }
-          ]
-          break
-        default:
-          this.block = [
-            { i: 0, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 5 },
-            { i: -1, y: 5 }
-          ]
-          break
-      }
+      this.block = [
+        { i: 0, y: 4 },
+        { i: -1, y: 4 },
+        { i: 0, y: 5 },
+        { i: -1, y: 5 }
+      ]
     },
     moveDown: function() {
       const currentBoard = [...this.gameBoard]
@@ -171,7 +110,6 @@ export default {
       this.gameBoard = newBoard
     },
     downReducer: function(acc, obj) {
-      if (obj.i < 0) return acc
       if (typeof this.gameBoard[obj.y][obj.i + 1] === 'undefined') return 1
       if (this.gameBoard[obj.y][obj.i + 1] === 2) return 1
       return acc
@@ -197,12 +135,12 @@ export default {
 </script>
 
 <style scoped>
-.field {
-  display: inline-block;
-  width: 2rem;
-  border: 1px solid black;
-}
 .block {
   display: inline-block;
+}
+
+.field {
+  padding: 5px;
+  border: red 2px solid;
 }
 </style>
