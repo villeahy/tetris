@@ -63,12 +63,24 @@ export default {
       }
     },
     newBlock: function() {
-      this.block = [
-        { i: 0, y: 4 },
-        { i: -1, y: 4 },
-        { i: 0, y: 5 },
-        { i: -1, y: 5 }
-      ]
+      switch (Math.random() * Math.floor(6)) {
+        case 0:
+          this.block = [
+            { i: 0, y: 4 },
+            { i: -1, y: 4 },
+            { i: 0, y: 5 },
+            { i: -1, y: 5 }
+          ]
+          break
+        default:
+          this.block = [
+            { i: 0, y: 4 },
+            { i: -1, y: 4 },
+            { i: 0, y: 5 },
+            { i: -1, y: 5 }
+          ]
+          break
+      }
     },
     moveDown: function() {
       const currentBoard = [...this.gameBoard]
