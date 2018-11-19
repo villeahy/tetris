@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { gameBoard } from './atetris.js'
+import { gameBoard } from './gameBoard.js'
 function rightReducer(acc, block) {
   if (block.y === 9) return false
   return acc
