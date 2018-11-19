@@ -176,7 +176,6 @@ export default {
     },
     move: function() {
       const value = this.block.reduce(this.downReducer, 2)
-      console.log(value)
       switch (value) {
         case 1:
           this.setValues()
