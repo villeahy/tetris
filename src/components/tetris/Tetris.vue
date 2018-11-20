@@ -10,14 +10,7 @@
 
 <script>
 import { gameBoard } from './gameBoard.js'
-function rightReducer(acc, block) {
-  if (block.y === 9) return false
-  return acc
-}
-function leftReducer(acc, block) {
-  if (block.y === 0) return true
-  return acc
-}
+import blockGenerator from './blockGenerator.js'
 
 export default {
   name: 'Tetris',
@@ -52,10 +45,10 @@ export default {
       console.log(e.code)
       switch (e.code) {
         case 'ArrowLeft':
-          this.goLeft()
+          this.moveSide(-1)
           break
         case 'ArrowRight':
-          this.goRight()
+          this.moveSide(1)
           break
         case 'ArrowDown':
           this.move()
@@ -64,72 +57,7 @@ export default {
       }
     },
     newBlock: function() {
-      switch (Math.floor(Math.random() * 7)) {
-        case 0:
-          this.block = [
-            { i: 0, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 5 },
-            { i: -1, y: 5 }
-          ]
-          break
-        case 1:
-          this.block = [
-            { i: -2, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 4 },
-            { i: 0, y: 5 }
-          ]
-          break
-        case 2:
-          this.block = [
-            { i: -2, y: 5 },
-            { i: -1, y: 5 },
-            { i: 0, y: 4 },
-            { i: 0, y: 5 }
-          ]
-          break
-        case 3:
-          this.block = [
-            { i: -1, y: 4 },
-            { i: -1, y: 5 },
-            { i: 0, y: 5 },
-            { i: 0, y: 6 }
-          ]
-          break
-        case 4:
-          this.block = [
-            { i: -1, y: 5 },
-            { i: -1, y: 6 },
-            { i: 0, y: 4 },
-            { i: 0, y: 5 }
-          ]
-          break
-        case 5:
-          this.block = [
-            { i: -3, y: 4 },
-            { i: -2, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 4 }
-          ]
-          break
-        case 6:
-          this.block = [
-            { i: -2, y: 4 },
-            { i: -1, y: 4 },
-            { i: -1, y: 5 },
-            { i: 0, y: 4 }
-          ]
-          break
-        default:
-          this.block = [
-            { i: 0, y: 4 },
-            { i: -1, y: 4 },
-            { i: 0, y: 5 },
-            { i: -1, y: 5 }
-          ]
-          break
-      }
+      this.block = blockGenerator(Math.floor(Math.random() * 7))
     },
     moveDown: function() {
       this.block.forEach(obj => {
@@ -138,45 +66,43 @@ export default {
       this.block = this.block.map(obj => ({ ...obj, i: obj.i + 1 }))
     },
     moveSide: function(value) {
+      const side = value === -1 ? 0 : this.gameBoard.length - 1
+      if (
+        this.block.reduce((acc, block) => {
+          if (block.y === side) return true
+          return acc
+        }, false)
+      ) {
+        return
+      }
+      if (
+        this.block.reduce((acc, obj) => {
+          if (obj.i < 0) return acc
+          if (this.gameBoard[obj.y + value][obj.i] === 2) return true
+          return acc
+        }, false)
+      ) {
+        return
+      }
       this.block.forEach(obj => {
         this.gameBoard[obj.y][obj.i] = 0
       })
       this.block = this.block.map(obj => ({ ...obj, y: obj.y + value }))
-    },
-    checkLeft: function(acc, obj) {
-      if (obj.i < 0) return acc
-      if (this.gameBoard[obj.y - 1][obj.i] === 2) return true
-      return acc
-    },
-    checkRight: function(acc, obj) {
-      if (obj.i < 0) return acc
-      if (this.gameBoard[obj.y + 1][obj.i] === 2) return true
-      return acc
-    },
-    goLeft: function() {
-      if (this.block.reduce(leftReducer, false)) return
-      if (this.block.reduce(this.checkLeft, false)) return
-      this.moveSide(-1)
-    },
-    goRight: function() {
-      if (this.block.reduce(rightReducer, false)) return
-      if (this.block.reduce(this.checkRight, false)) return
-      this.moveSide(1)
     },
     setValues: function() {
       this.block.forEach(obj => {
         this.gameBoard[obj.y][obj.i] = 2
       })
     },
-    downReducer: function(acc, obj) {
-      if (obj.i < 0) return acc
-      if (typeof this.gameBoard[obj.y][obj.i + 1] === 'undefined') return 1
-      if (this.gameBoard[obj.y][obj.i + 1] === 2) return 1
-      return acc
-    },
     move: function() {
-      const value = this.block.reduce(this.downReducer, 2)
-      switch (value) {
+      switch (
+        this.block.reduce((acc, obj) => {
+          if (obj.i < 0) return acc
+          if (typeof this.gameBoard[obj.y][obj.i + 1] === 'undefined') return 1
+          if (this.gameBoard[obj.y][obj.i + 1] === 2) return 1
+          return acc
+        }, 2)
+      ) {
         case 1:
           this.setValues()
           this.newBlock()
