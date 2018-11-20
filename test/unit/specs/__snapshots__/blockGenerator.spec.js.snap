@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works 1`] = `
+Array [
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+  Object {
+    "i": -1,
+    "y": 5,
+  },
+]
+`;
+
+exports[`works 2`] = `
+Array [
+  Object {
+    "i": -2,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+]
+`;
+
+exports[`works 3`] = `
+Array [
+  Object {
+    "i": -2,
+    "y": 5,
+  },
+  Object {
+    "i": -1,
+    "y": 5,
+  },
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+]
+`;
+
+exports[`works 4`] = `
+Array [
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 5,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+  Object {
+    "i": 0,
+    "y": 6,
+  },
+]
+`;
+
+exports[`works 5`] = `
+Array [
+  Object {
+    "i": -1,
+    "y": 5,
+  },
+  Object {
+    "i": -1,
+    "y": 6,
+  },
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+]
+`;
+
+exports[`works 6`] = `
+Array [
+  Object {
+    "i": -3,
+    "y": 4,
+  },
+  Object {
+    "i": -2,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+]
+`;
+
+exports[`works 7`] = `
+Array [
+  Object {
+    "i": -2,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 5,
+  },
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+]
+`;
+
+exports[`works 8`] = `
+Array [
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+  Object {
+    "i": -1,
+    "y": 5,
+  },
+]
+`;
