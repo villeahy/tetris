@@ -53,7 +53,6 @@ export default {
         case 'ArrowDown':
           this.move()
           break
-        default:
       }
     },
     newBlock: function() {
@@ -108,9 +107,6 @@ export default {
           this.newBlock()
           break
         case 2:
-          this.moveDown()
-          break
-        default:
           this.moveDown()
           break
       }
