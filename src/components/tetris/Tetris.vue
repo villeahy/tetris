@@ -115,10 +115,10 @@ export default {
           break
         case 6:
           this.block = [
-            { i: -2, y: 4 },
             { i: -1, y: 4 },
             { i: -1, y: 5 },
-            { i: 0, y: 4 }
+            { i: -1, y: 6 },
+            { i: 0, y: 5 }
           ]
           break
         default:
