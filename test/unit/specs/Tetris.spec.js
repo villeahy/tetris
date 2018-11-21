@@ -22,11 +22,10 @@ test('block have right length', () => {
 })
 
 test('move left', () => {
-  const block = { i: 2, y: 1 }
   const Constructor = Vue.extend(Tetris)
   const vm = new Constructor().$mount()
+  vm.block = [{ i: 2, y: 1 }]
   vm.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0]]
-  vm.block = [{ ...block }]
   expect(vm.block[0].y).toBe(1)
   vm.mainHandler({ code: 'ArrowLeft' })
   expect(vm.block[0].y).toBe(0)
@@ -49,8 +48,8 @@ test('move right', () => {
 test('try to move side while blocked', () => {
   const Constructor = Vue.extend(Tetris)
   const vm = new Constructor().$mount()
-  vm.gameBoard = [[0, 0, 0, 0], [0, 0, 2, 0]]
   vm.block = [{ i: 2, y: 0 }]
+  vm.gameBoard = [[0, 0, 0, 0], [0, 0, 2, 0]]
   expect(vm.block[0].y).toBe(0)
   vm.mainHandler({ code: 'ArrowRight' })
   expect(vm.block[0].y).toBe(0)
@@ -59,8 +58,8 @@ test('try to move side while blocked', () => {
 test('move down', () => {
   const Constructor = Vue.extend(Tetris)
   const vm = new Constructor().$mount()
-  vm.gameBoard = [[0, 0, 0, 0]]
   vm.block = [{ i: 2, y: 0 }]
+  vm.gameBoard = [[0, 0, 0, 0]]
   expect(vm.block[0].i).toBe(2)
   vm.mainHandler({ code: 'ArrowDown' })
   expect(vm.block[0].i).toBe(3)

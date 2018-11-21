@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`works 1`] = `
+exports[`block generator test 1`] = `
 Array [
   Object {
     "i": 0,
@@ -21,31 +21,31 @@ Array [
 ]
 `;
 
-exports[`works 2`] = `
-Array [
-  Object {
-    "i": -2,
-    "y": 4,
-  },
-  Object {
-    "i": -1,
-    "y": 4,
-  },
-  Object {
-    "i": 0,
-    "y": 4,
-  },
-  Object {
-    "i": 0,
-    "y": 5,
-  },
-]
-`;
-
-exports[`works 3`] = `
+exports[`block generator test 2`] = `
 Array [
   Object {
     "i": -2,
+    "y": 4,
+  },
+  Object {
+    "i": -1,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 4,
+  },
+  Object {
+    "i": 0,
+    "y": 5,
+  },
+]
+`;
+
+exports[`block generator test 3`] = `
+Array [
+  Object {
+    "i": -2,
     "y": 5,
   },
   Object {
@@ -63,7 +63,7 @@ Array [
 ]
 `;
 
-exports[`works 4`] = `
+exports[`block generator test 4`] = `
 Array [
   Object {
     "i": -1,
@@ -84,7 +84,7 @@ Array [
 ]
 `;
 
-exports[`works 5`] = `
+exports[`block generator test 5`] = `
 Array [
   Object {
     "i": -1,
@@ -105,7 +105,7 @@ Array [
 ]
 `;
 
-exports[`works 6`] = `
+exports[`block generator test 6`] = `
 Array [
   Object {
     "i": -3,
@@ -126,7 +126,7 @@ Array [
 ]
 `;
 
-exports[`works 7`] = `
+exports[`block generator test 7`] = `
 Array [
   Object {
     "i": -2,
@@ -147,7 +147,7 @@ Array [
 ]
 `;
 
-exports[`works 8`] = `
+exports[`block generator test 8`] = `
 Array [
   Object {
     "i": 0,
@@ -165,5 +165,74 @@ Array [
     "i": -1,
     "y": 5,
   },
+]
+`;
+
+exports[`test drop lines function 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+    2,
+  ],
+  Array [
+    0,
+    0,
+    2,
+    2,
+  ],
+  Array [
+    0,
+    2,
+    2,
+    2,
+  ],
+]
+`;
+
+exports[`test of checklines function 1`] = `
+Array [
+  Array [
+    0,
+    2,
+    2,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    2,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+]
+`;
+
+exports[`testing clear line function 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    5,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
 ]
 `;

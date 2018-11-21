@@ -9,9 +9,12 @@
 </template>
 
 <script>
-import { gameBoard } from './gameBoard.js'
-import blockGenerator from './blockGenerator.js'
-
+import {
+  gameBoard,
+  blockGenerator,
+  renderBoard,
+  checkLines
+} from './gameUtils.js'
 export default {
   name: 'Tetris',
   data: function() {
@@ -29,21 +32,15 @@ export default {
   },
   computed: {
     renderedGameBoard: function() {
-      const currentBoard = [...this.gameBoard]
-      this.block.forEach(obj => {
-        if (obj.i >= 0) {
-          if (currentBoard[obj.y][obj.i] !== 2) {
-            currentBoard[obj.y][obj.i] = 1
-          }
-        }
-      })
-      return currentBoard
+      return renderBoard(
+        this.gameBoard.map(arr => [...arr]),
+        this.block.map(obj => ({ ...obj }))
+      )
     }
   },
   methods: {
-    mainHandler: function(e) {
-      console.log(e.code)
-      switch (e.code) {
+    mainHandler: function({ code }) {
+      switch (code) {
         case 'ArrowLeft':
           this.moveSide(-1)
           break
@@ -59,9 +56,6 @@ export default {
       this.block = blockGenerator(Math.floor(Math.random() * 7))
     },
     moveDown: function() {
-      this.block.forEach(obj => {
-        this.gameBoard[obj.y][obj.i] = 0
-      })
       this.block = this.block.map(obj => ({ ...obj, i: obj.i + 1 }))
     },
     moveSide: function(value) {
@@ -83,9 +77,6 @@ export default {
       ) {
         return
       }
-      this.block.forEach(obj => {
-        this.gameBoard[obj.y][obj.i] = 0
-      })
       this.block = this.block.map(obj => ({ ...obj, y: obj.y + value }))
     },
     setValues: function() {
@@ -104,6 +95,9 @@ export default {
       ) {
         case 1:
           this.setValues()
+          this.gameBoard = checkLines({
+            gameBoard: this.gameBoard.map(arr => [...arr])
+          })
           this.newBlock()
           break
         case 2:
@@ -122,6 +116,6 @@ export default {
 
 .field {
   padding: 5px;
-  border: red 2px solid;
+  border: gray 2px solid;
 }
 </style>
