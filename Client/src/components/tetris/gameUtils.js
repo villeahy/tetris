@@ -48,7 +48,6 @@ export function checkLines({
   i = gameBoard[0].length - 1,
   column = 0
 }) {
-  // check if eveything is checked
   if (i === 0 && column === gameBoard.length - 1) {
     if (!gameBoard[column][i]) return gameBoard
     return clearLine({ i, gameBoard })
@@ -73,6 +72,7 @@ export function checkLines({
     return checkLines({ column: 0, i: i - 1, gameBoard })
   }
 }
+
 export function clearLine({ i, column = 0, gameBoard }) {
   gameBoard[column][i] = 0
   if (column === gameBoard.length - 1) {
@@ -81,6 +81,7 @@ export function clearLine({ i, column = 0, gameBoard }) {
     return clearLine({ i, column: column + 1, gameBoard })
   }
 }
+
 export function dropLines({ column = 0, i = 0, gameBoard }) {
   gameBoard[column][i + 1] = gameBoard[column][i]
   if (i === 0 && column === gameBoard.length - 1) {

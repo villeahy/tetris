@@ -2,7 +2,7 @@
   <div id="MainPage">
     <div class="header">
       <h1>Welcome to Tetris!</h1>
-      <p>This game is a part of our project in the project course at Howest.
+      <p v-on:click="action">This game is a part of our project in the project course at Howest.
       We are a group of three international students from Poland, Finland and Norway.</p>
     </div>
     <nav>
@@ -14,8 +14,41 @@
 </template>
 
 <script>
+import socket from '../socket.js'
 export default {
-  name: 'HelloWorld'
+  name: 'Landing',
+  data() {
+    return {
+      status: '',
+      opponentBoard: [],
+      ownBoard: []
+    }
+  },
+  methods: {
+    action: function() {
+      socket.emit('action', { type: 'left' }, this.callback)
+    },
+    callback: function(board) {
+      this.ownBoard = board
+    }
+  },
+  mounted() {
+    if (socket.disconnected) {
+      socket.connect()
+    }
+    socket.on('opponentLeft', () => {
+      socket.emit('newOpponent')
+    })
+    socket.on('gameStatus', status => {
+      this.status = status
+    })
+    socket.on('action', board => {
+      this.opponentBoard = board
+    })
+  },
+  destroyed() {
+    socket.disconnect()
+  }
 }
 </script>
 
