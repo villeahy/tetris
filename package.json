@@ -7,7 +7,10 @@
   "scripts": {
     "dev:backend": "nodemon --exec babel-node src/index.js",
     "dev:frontend": "cd Client && npm run dev",
-    "dev": "npm-run-all --parallel dev:backend dev:frontend"
+    "dev": "npm-run-all --parallel dev:backend dev:frontend",
+    "install:client": "cd Client && yarn",
+    "install:all": "npm-run-all yarn:run install:client",
+    "yarn:run": "yarn"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,6 +23,7 @@
     "@babel/core": "^7.2.0",
     "@babel/node": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "yarn": "^1.12.3"
   }
 }
