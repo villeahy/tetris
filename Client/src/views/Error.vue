@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
-    Trying to recover from error
-    if nothing happens try to reload page
+    <p>Whoopsies error happened</p>
+    <button @click="click">Try recover</button>
   </div>
 
 </template>
@@ -10,9 +10,13 @@
 import socket from '../components/socket.js'
 export default {
   name: 'error',
+  methods: {
+    click: function() {
+      socket.connect()
+    }
+  },
   mounted() {
     socket.disconnect()
-    socket.connect()
   }
 }
 </script>

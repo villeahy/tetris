@@ -15,7 +15,7 @@ export default class {
   }
 
   set block(block) {
-    this._block;
+    this._block = block;
     const [, room] = Object.keys(this.socket.rooms);
     this.socket.to(room).emit("action", this.renderBoard);
   }
