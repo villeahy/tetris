@@ -6,7 +6,15 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'game',
+  data() {
+    return {
+      ownBoard: [],
+      opponentBoard: []
+    }
+  }
+}
 </script>
 
 <style lang="css">
