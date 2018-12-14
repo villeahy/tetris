@@ -2,12 +2,12 @@
   <div id="MainPage">
     <div class="header">
       <h1>Welcome to Tetris!</h1>
-      <p v-on:click="action">This game is a part of our project in the project course at Howest.
+      <p>This game is a part of our project in the project course at Howest.
       We are a group of three international students from Poland, Finland and Norway.</p>
     </div>
     <nav>
       <ul>
-        <router-link to='/tetris'><li class="play-btn">Play game</li></router-link>
+        <li @click="action" class="play-btn">Play game</li>
       </ul>
     </nav>
   </div>
@@ -17,37 +17,10 @@
 import socket from '../socket.js'
 export default {
   name: 'Landing',
-  data() {
-    return {
-      status: '',
-      opponentBoard: [],
-      ownBoard: []
-    }
-  },
   methods: {
     action: function() {
-      socket.emit('action', { type: 'left' }, this.callback)
-    },
-    callback: function(board) {
-      this.ownBoard = board
-    }
-  },
-  mounted() {
-    if (socket.disconnected) {
-      socket.connect()
-    }
-    socket.on('opponentLeft', () => {
       socket.emit('newOpponent')
-    })
-    socket.on('gameStatus', status => {
-      this.status = status
-    })
-    socket.on('action', board => {
-      this.opponentBoard = board
-    })
-  },
-  destroyed() {
-    socket.disconnect()
+    }
   }
 }
 </script>
