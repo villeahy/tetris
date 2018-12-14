@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import socket from '../socket.js'
+import socket from '../components/socket.js'
 export default {
   name: 'error',
   mounted() {

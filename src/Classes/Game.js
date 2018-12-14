@@ -1,27 +1,12 @@
 import blockGenerator from "../helpers/blockGenerator.js";
+import emptyBoard from "../helpers/board.js";
 export default class {
   constructor(socket) {
     this.socket = socket;
     this.status = "joined";
     this.room;
-    this._block = [
-      { i: 0, y: 4 },
-      { i: -1, y: 4 },
-      { i: 0, y: 5 },
-      { i: -1, y: 5 }
-    ];
-    this._gameBoard = [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ];
+    this._block = [];
+    this._gameBoard = [];
   }
 
   // tells opponent that your game board changed
@@ -32,7 +17,7 @@ export default class {
   set block(block) {
     this._block;
     const [, room] = Object.keys(this.socket.rooms);
-    this.socket.to(room).emit("action", this.renderBoard());
+    this.socket.to(room).emit("action", this.renderBoard);
   }
 
   // remove mutating
@@ -45,7 +30,7 @@ export default class {
     return this._gameBoard.map(arr => [...arr]);
   }
 
-  renderBoard() {
+  get renderBoard() {
     const board = this.gameBoard;
     this.block.forEach(obj => {
       if (obj.i >= 0) {
@@ -67,6 +52,7 @@ export default class {
     this.block = blockGenerator(Math.floor(Math.random() * 7));
   }
 
+  // Switch case should always end up with setting up block or calling newblock so it will emit actions to opponent
   move({ type }) {
     switch (type) {
       case "ArrowLeft":
@@ -78,9 +64,15 @@ export default class {
       case "ArrowDown":
         console.log("arrowDown");
         break;
+      case "Init":
+        this.gameBoard = emptyBoard;
+        this.newBlock();
+        break;
       default:
         console.log("default");
         break;
     }
+    //for callback so you will se your own board
+    return this.renderBoard;
   }
 }

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import socket from '../socket.js'
+import socket from '../components/socket.js'
 export default {
   name: 'Landing',
   methods: {
@@ -28,7 +28,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #MainPage {
-  background: url('../../assets/img/background-front-page.jpg') center;
+  background: url('../assets/img/background-front-page.jpg') center;
   height: 100vh;
   padding: 1px;
 }

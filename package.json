@@ -9,8 +9,7 @@
     "dev:frontend": "cd Client && npm run dev",
     "dev": "npm-run-all --parallel dev:backend dev:frontend",
     "install:client": "cd Client && yarn",
-    "install:all": "npm-run-all yarn:run install:client",
-    "yarn:run": "yarn"
+    "install": "yarn install:client"
   },
   "dependencies": {
     "cors": "^2.8.5",

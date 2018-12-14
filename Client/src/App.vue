@@ -10,10 +10,10 @@
 
 <script>
 import socket from './components/socket.js'
-import Landing from '@/components/views/Landing'
-import Loading from '@/components/views/Loading'
-import ErrorComp from '@/components/views/Error'
-import Game from '@/components/views/Game'
+import Landing from '@/views/Landing'
+import Loading from '@/views/Loading'
+import ErrorComp from '@/views/Error'
+import Game from '@/views/Game'
 
 export default {
   name: 'App',
@@ -30,15 +30,6 @@ export default {
       ownBoard: []
     }
   },
-  methods: {
-    action: function() {
-      console.log('action')
-      socket.emit('action', { type: 'ArrowLeft' }, this.callback)
-    },
-    callback: function(board) {
-      this.ownBoard = board
-    }
-  },
   mounted() {
     if (socket.disconnected) {
       socket.connect()
@@ -50,10 +41,6 @@ export default {
     })
     socket.on('gameStatus', status => {
       this.status = status
-    })
-    socket.on('action', board => {
-      console.log('action', board)
-      this.opponentBoard = board
     })
     socket.on('connect_error', error => {
       console.log(error)

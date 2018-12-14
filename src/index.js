@@ -24,14 +24,8 @@ io.on("connection", function(socket) {
   socket.emit("gameStatus", "joined");
 
   //listen for player actions and returns changes on owm board and emmits them for enemy
-  socket.on("action", (data, callback) => {
-    game.block = [
-      { i: -2, y: 5 },
-      { i: -1, y: 5 },
-      { i: 0, y: 4 },
-      { i: 0, y: 5 }
-    ];
-    callback(game.renderBoard());
+  socket.on("action", (action, callback) => {
+    callback(game.move(action));
   });
   //action for looking for new opponent
   socket.on("newOpponent", () => {
