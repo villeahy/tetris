@@ -8,16 +8,18 @@
 
 <script>
 export default {
-  name: 'gameboard',
-  props: ['board']
-}
+  name: "gameboard",
+  props: ["board"]
+};
 </script>
 
 <style lang="css">
   .container {
-    padding: 1rem;
+    padding: 2rem;
+    display: inline-block;
   }
  .column {
+   padding: 3px;
    display: inline-block;
  }
 </style>
