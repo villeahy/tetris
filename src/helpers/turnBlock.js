@@ -1,15 +1,22 @@
-export default function({ value, coords, turn }) {
+export function turnBlock({ value, coords, turn }) {
+  const [first, second, third, fourth] = coords;
   switch (value) {
     case 5:
-      if (turn) {
-        coords[0].row = coords[0].row - 2;
-        coords[3].column = coords[3].column - 1;
+      console.log("turn block case 5");
+      if (!turn) {
+        third.row = third.row + 2;
+        second.column = second.column + 2;
       } else {
-        coords[0].row = coords[0].row + 2;
-        coords[3].column = coords[3].column + 1;
+        third.row = third.row - 2;
+        second.column = second.column - 2;
       }
-      return { value, coords, turn: (turn + 1) % 2 };
+      return {
+        value,
+        coords: [first, second, third, fourth],
+        turn: (turn + 1) % 2
+      };
     default:
+      console.log("turn block default");
       return { value, coords, turn };
   }
 }

@@ -41,9 +41,9 @@ export default class {
   get renderBoard() {
     const board = this.gameBoard;
     this.block.coords.forEach(obj => {
-      if (obj.i >= 0) {
-        if (board[obj.y][obj.i] !== 2) {
-          board[obj.y][obj.i] = this.block.value;
+      if (obj.row >= 0) {
+        if (board[obj.column][obj.row] !== 2) {
+          board[obj.column][obj.row] = this.block.value;
         }
       }
     });
@@ -76,6 +76,7 @@ export default class {
         this.moveDown();
         break;
       case "ArrowUp":
+        console.log("arrowup");
         this.block = turnBlock(this.block);
         break;
       case "Init":
@@ -99,7 +100,7 @@ export default class {
 
   setValues() {
     this.block.coords.forEach(obj => {
-      this._gameBoard[obj.y][obj.i] = this.block.value;
+      this._gameBoard[obj.column][obj.row] = this.block.value;
     });
   }
 
@@ -108,10 +109,10 @@ export default class {
     // checks if you can go down or have to set block and check lines
     if (
       this.block.coords.reduce((acc, obj) => {
-        if (obj.i < 0) return acc;
+        if (obj.row < 0) return acc;
         if (
-          this.gameBoard[obj.y][obj.i + 1] > 0 ||
-          this.gameBoard[obj.y][obj.i + 1] === undefined
+          this.gameBoard[obj.column][obj.row + 1] > 0 ||
+          this.gameBoard[obj.column][obj.row + 1] === undefined
         )
           return 1;
         return acc;
@@ -125,7 +126,7 @@ export default class {
     } else {
       this.block = {
         ...this.block,
-        coords: this.block.coords.map(obj => ({ ...obj, i: obj.i + 1 }))
+        coords: this.block.coords.map(obj => ({ ...obj, row: obj.row + 1 }))
       };
     }
   }
@@ -136,8 +137,8 @@ export default class {
     // chekcs if you can move side if not returns so function will be interupted
     if (
       this.block.coords.reduce((acc, obj) => {
-        if (obj.y === side) return true;
-        if (this.gameBoard[obj.y + value][obj.i] > 0) return true;
+        if (obj.column === side) return true;
+        if (this.gameBoard[obj.column + value][obj.row] > 0) return true;
         return acc;
       }, false)
     ) {
@@ -145,7 +146,10 @@ export default class {
     }
     this.block = {
       ...this.block,
-      coords: this.block.coords.map(obj => ({ ...obj, y: obj.y + value }))
+      coords: this.block.coords.map(obj => ({
+        ...obj,
+        column: obj.column + value
+      }))
     };
   }
 }
