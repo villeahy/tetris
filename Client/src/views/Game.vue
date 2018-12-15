@@ -6,36 +6,51 @@
 </template>
 
 <script>
-import socket from '@/components/socket.js'
-import GameBoard from '@/components/GameBoard'
+import socket from "@/components/socket.js";
+import GameBoard from "@/components/GameBoard";
 export default {
-  name: 'game',
+  name: "game",
   components: {
-    'gameboard-vue': GameBoard
+    "gameboard-vue": GameBoard
   },
   data() {
     return {
       ownBoard: [],
       opponentBoard: []
-    }
+    };
   },
   methods: {
     action: function(type) {
-      console.log('action')
-      socket.emit('action', { type }, this.callback)
+      socket.emit("action", { type }, this.callback);
     },
     callback: function(board) {
-      this.ownBoard = board
+      this.ownBoard = board;
+    },
+    mainHandler: function({ code }) {
+      switch (code) {
+        case "ArrowLeft":
+          this.action(code);
+          break;
+        case "ArrowRight":
+          this.action(code);
+          break;
+        case "ArrowDown":
+          this.action(code);
+          break;
+      }
     }
   },
   mounted() {
-    socket.on('action', board => {
-      console.log('action')
-      this.opponentBoard = board
-    })
-    this.action('Init')
+    document.addEventListener("keydown", this.mainHandler);
+    socket.on("action", board => {
+      this.opponentBoard = board;
+    });
+    this.action("Init");
+  },
+  destroyed() {
+    document.removeEventListener("keydown", this.mainHandler);
   }
-}
+};
 </script>
 
 <style lang="css">

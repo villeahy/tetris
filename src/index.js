@@ -34,12 +34,14 @@ io.on("connection", function(socket) {
   //tell opponent if you leave
   socket.on("disconnect", () => {
     console.log("socket disconnected");
+    waitingRoom.leaveLobby(game.room);
     io.to(game.room).emit("opponentLeft");
     socket.disconnect(true);
   });
   //if error leave and tell opponent
   socket.on("error", () => {
     console.log("socket error");
+    waitingRoom.leaveLobby(game.room);
     io.to(game.room).emit("opponentLeft");
     socket.disconnect(true);
   });

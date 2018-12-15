@@ -7,6 +7,10 @@ export default class {
     this.io = io;
     this.waitingRoom = { makeNew: true };
   }
+
+  leaveLobby(room) {
+    if (room === this.waitingRoom.room) this.waitingRoom = { makeNew: true };
+  }
   joinGame(socket) {
     // this hideous thing is called Conditional (ternary) operator https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator
     // it checks if some is waiting for player you select from new object or waitingroom object
@@ -17,7 +21,7 @@ export default class {
           status: "waiting"
         }
       : this.waitingRoom;
-
+    console.log(room.room);
     socket.join(room.room);
     //checks if you are joining room or waiting for another player
     if (this.waitingRoom.makeNew) {
