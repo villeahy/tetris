@@ -25,6 +25,7 @@ io.on("connection", function(socket) {
 
   //listen for player actions and returns changes on owm board and emmits them for enemy
   socket.on("action", (action, callback) => {
+    console.log("action");
     callback(game.move(action));
   });
   //action for looking for new opponent

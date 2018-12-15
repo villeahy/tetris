@@ -21,7 +21,6 @@ export default class {
           status: "waiting"
         }
       : this.waitingRoom;
-    console.log(room.room);
     socket.join(room.room);
     //checks if you are joining room or waiting for another player
     if (this.waitingRoom.makeNew) {

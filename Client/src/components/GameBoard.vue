@@ -1,14 +1,16 @@
 <template lang="html">
   <div class="container">
     <div class="column" :key="i" v-for="(row, i) in board">
-      <div class="field" v-for="(cell, index) in row" :key="index">{{ cell }}</div>
+      <block-vue class="field" v-for="(cell, index) in row" :key="index" :type="cell" />
     </div>
   </div>
 </template>
 
 <script>
+import Block from "./Block";
 export default {
   name: "gameboard",
+  components: { "block-vue": Block },
   props: ["board"]
 };
 </script>
