@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
-    <p>Whoopsies error happened</p>
-    <button @click="click">Try recover</button>
+  <div class="error">
+    <p>Whoopsies an error occured</p>
+    <button @click="click">Try again</button>
   </div>
 
 </template>
@@ -21,5 +21,14 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped lang="css">
+.error {
+  background: #a60000;
+  border-radius: 10px;
+  width: 50%;
+  margin: calc(50vh - 75.2px) auto;
+  padding: 20px;
+  color: #ff0000;
+  font-weight: 600;
+}
 </style>
