@@ -46,5 +46,6 @@ export default {
 
  .gray{
    background: #b4b4b4;
+   border: 0.1px solid #ababab;
  }
 </style>

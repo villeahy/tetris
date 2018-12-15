@@ -63,5 +63,8 @@ export default {
 
 .board {
   margin-top: 70px;
+  padding: 5px;
+  background: #6a6a6a;
+  border-radius: 5px;
 }
 </style>
