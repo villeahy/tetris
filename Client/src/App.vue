@@ -57,6 +57,11 @@ export default {
 <style>
 @import 'assets/css/normalize.css';
 
+html {
+    background: linear-gradient(to bottom, #f9f9f9 0%,#d6d6d6 100%);
+    height: 100vh;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
