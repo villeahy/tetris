@@ -32,14 +32,18 @@ export default {
   }
 
  .red{
-   background: red;
+   background: #c70000;
+   border: 5px solid red;
  }
  .green{
-   background: green;
+   background: #04a404;
+   border: 5px solid #00ef00;
  }
  .yellow{
-   background: yellow;
+   background: #d2d200;
+   border: 5px solid yellow;
  }
+
  .gray{
    background: #b4b4b4;
  }
