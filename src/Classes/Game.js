@@ -1,4 +1,9 @@
-import { emptyBoard, blockGenerator, checkLines } from "../helpers/index.js";
+import {
+  emptyBoard,
+  blockGenerator,
+  checkLines,
+  turnBlock
+} from "../helpers/index.js";
 
 export default class {
   constructor(socket) {
@@ -22,7 +27,10 @@ export default class {
 
   // remove mutating
   get block() {
-    return this._block;
+    return {
+      ...this._block,
+      coords: this._block.coords.map(obj => ({ ...obj }))
+    };
   }
 
   // remove mutating
@@ -66,6 +74,9 @@ export default class {
       case "ArrowDown":
         console.log("arrowDown");
         this.moveDown();
+        break;
+      case "ArrowUp":
+        this.block = turnBlock(this.block);
         break;
       case "Init":
         this.gameBoard = emptyBoard;

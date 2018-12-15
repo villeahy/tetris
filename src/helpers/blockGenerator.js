@@ -43,6 +43,7 @@ export function blockGenerator(number) {
     case 4:
       return {
         value: 5,
+        turn: 0,
         coords: [
           { i: -1, y: 5 },
           { i: -1, y: 6 },
@@ -72,7 +73,7 @@ export function blockGenerator(number) {
       };
     default:
       return {
-        value: 0,
+        value: 1,
         coords: [
           { i: 0, y: 4 },
           { i: -1, y: 4 },

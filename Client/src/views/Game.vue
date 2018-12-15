@@ -37,6 +37,9 @@ export default {
         case "ArrowDown":
           this.action(code);
           break;
+        case "ArrowUp":
+          this.action(code);
+          break;
       }
     }
   },
