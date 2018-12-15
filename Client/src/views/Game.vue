@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
-    <gameboard-vue :board="ownBoard" />
-    <gameboard-vue :board="opponentBoard" />
+  <div class="wrapper">
+    <gameboard-vue class="board" :board="ownBoard" />
+    <gameboard-vue class="board" :board="opponentBoard" />
   </div>
 </template>
 
@@ -53,5 +53,15 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style scoped lang="css">
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.board {
+  margin-top: 70px;
+}
 </style>

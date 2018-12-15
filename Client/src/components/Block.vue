@@ -1,6 +1,5 @@
 <template lang="html">
   <div :class="className">
-    x
   </div>
 </template>
 
@@ -26,16 +25,22 @@ export default {
 </script>
 
 <style lang="css">
+
+  .red, .green, .yellow, .gray {
+    height: 30px;
+    width: 30px;
+  }
+
  .red{
-   color: red;
+   background: red;
  }
  .green{
-   color: green;
+   background: green;
  }
  .yellow{
-   color: yellow;
+   background: yellow;
  }
  .gray{
-   color: gray;
+   background: #b4b4b4;
  }
 </style>
