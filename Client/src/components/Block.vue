@@ -22,8 +22,6 @@ export default {
             return "purple";
         case 5:
             return "orange";
-        case 6:
-            return "orange";
         default:
           return "yellow";
       }
