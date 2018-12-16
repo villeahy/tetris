@@ -42,6 +42,22 @@ export function turnBlock({ value, coords, turn }) {
         coords: [first, second, third, fourth],
         turn: (turn + 1) % 4
       };
+
+    case 4:
+      console.log("turn block case 4");
+      if (turn) {
+        first.column = first.column - 2;
+        fourth.row = fourth.row + 2;
+      } else {
+        first.column = first.column + 2;
+        fourth.row = fourth.row - 2;
+      }
+      return {
+        value,
+        coords: [first, second, third, fourth],
+        turn: (turn + 1) % 2
+      };
+
     case 5:
       console.log("turn block case 5");
       if (turn) {
