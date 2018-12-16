@@ -29,8 +29,8 @@ export function blockGenerator(number) {
         coords: [
           { row: -2, column: 5 },
           { row: -1, column: 5 },
-          { row: 0, column: 4 },
-          { row: 0, column: 5 }
+          { row: 0, column: 5 },
+          { row: 0, column: 4 }
         ]
       };
     case 3:
