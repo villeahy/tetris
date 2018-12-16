@@ -17,11 +17,11 @@ export default {
         case 2:
           return "green";
         case 3:
-            return "blue";
+          return "blue";
         case 4:
-            return "purple";
+          return "purple";
         case 5:
-            return "orange";
+          return "orange";
         default:
           return "yellow";
       }
@@ -32,22 +32,28 @@ export default {
 
 <style lang="css">
 
-  .red, .green, .yellow, .background, .blue, .purple, .orange {
+  .block {
     height: 30px;
     width: 30px;
+    /*
+    -webkit-clip-path: polygon(2% 16%, 6% 3%, 19% 3%, 80% 3%, 97% 6%, 96% 31%, 97% 91%, 88% 98%, 64% 98%, 19% 97%, 6% 96%, 3% 91%);
+    clip-path: polygon(2% 16%, 6% 3%, 19% 3%, 80% 3%, 97% 6%, 96% 31%, 97% 91%, 88% 98%, 64% 98%, 19% 97%, 6% 96%, 3% 91%);
+    overflow: hidden;
+    */
+    border: 5px solid currentColor;
   }
 
  .red{
    background: #c70000;
-   border: 5px solid red;
+   color: red;
  }
  .green{
    background: #04a404;
-   border: 5px solid #00ef00;
+   color: #00ef00;
  }
  .yellow{
    background: #d2d200;
-   border: 5px solid yellow;
+   color: yellow;
  }
 
  .background{
@@ -57,17 +63,17 @@ export default {
 
  .blue {
    background: #0095ff;
-   border: 5px solid #00c4ff;
+   color: #00c4ff;
  }
 
  .purple {
     background: #db02cb;
-    border: 5px solid #ff40f0;
+    color: #ff40f0;
  }
 
  .orange {
    background: #dd8f00;
-   border: 5px solid #ffbf00;
+   color: #ffbf00;
  }
 
 </style>
