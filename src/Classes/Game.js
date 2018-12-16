@@ -95,7 +95,7 @@ export default class {
   // Tetris logic//////////////////////////////////Math.floor(Math.random() * 7)
 
   newBlock() {
-    this.block = blockGenerator(Math.floor(Math.random() * 7));
+    this.block = blockGenerator(2);
   }
 
   setValues() {
