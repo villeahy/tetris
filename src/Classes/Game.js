@@ -119,9 +119,8 @@ export default class {
       }, 2) === 1
     ) {
       this.setValues();
-      this.gameBoard = checkLines({
-        gameBoard: this.gameBoard
-      });
+      const checked = checkLines(this.block, this.gameBoard);
+      this.gameBoard = checked.gameBoard;
       this.newBlock();
     } else {
       this.block = {

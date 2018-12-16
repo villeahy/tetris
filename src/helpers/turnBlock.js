@@ -15,7 +15,6 @@ function makeTurns({ value, coords, turn }, turns, board) {
 
 export function turnBlock(block, board) {
   const { value, coords, turn } = block;
-  const [first, second, third, fourth] = coords;
   let turns;
   switch (value) {
     case 2:

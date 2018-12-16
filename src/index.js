@@ -25,7 +25,6 @@ io.on("connection", async socket => {
 
   //listen for player actions and returns changes on owm board and emmits them for enemy
   socket.on("action", async (action, callback) => {
-    console.log("action");
     callback(game.action(action));
   });
   //action for looking for new opponent
@@ -34,9 +33,12 @@ io.on("connection", async socket => {
   });
   //tell opponent if you leave
   socket.on("disconnect", async () => {
-    console.log("socket disconnected");
+    console.log("disconnect");
     waitingRoom.leaveLobby(game.room);
     io.to(game.room).emit("opponentLeft");
+    socket.eventNames().forEach(event => {
+      socket.removeAllListeners(event);
+    });
     socket.disconnect(true);
   });
   //if error leave and tell opponent
@@ -44,6 +46,9 @@ io.on("connection", async socket => {
     console.log("socket error");
     waitingRoom.leaveLobby(game.room);
     io.to(game.room).emit("opponentLeft");
+    socket.eventNames().forEach(event => {
+      socket.removeAllListeners(event);
+    });
     socket.disconnect(true);
   });
 });

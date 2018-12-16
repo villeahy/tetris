@@ -1,53 +1,52 @@
-export function checkLines({
+export function checkLines(block, gameBoard) {
+  // set can only have unique values inside it and it is iterable so used it to take unique rows from block
+  const rows = new Set(block.coords.map(obj => obj.row).sort());
+  const clear = [...rows].reduce(
+    (acc, row) => (checkRow({ row, gameBoard }) ? [...acc, row] : acc),
+    []
+  );
+  return clear.length > 0
+    ? {
+        gameBoard: clear.reduce((acc, row) => {
+          return dropLines({ row, gameBoard });
+        }, {}),
+        cleared: clear.length
+      }
+    : { gameBoard, cleared: 0 };
+}
+
+function checkRow({
+  row = new Error("You need row in check row"),
   gameBoard,
-  i = gameBoard[0].length - 1,
   column = 0
 }) {
-  if (i === 0 && column === gameBoard.length - 1) {
-    if (!gameBoard[column][i]) return gameBoard;
-    return clearLine({ i, gameBoard });
-  } else if (i === 0) {
-    if (!gameBoard[column][i]) return gameBoard;
-    return checkLines({ column: column + 1, i, gameBoard });
-  } else if (column === gameBoard.length - 1) {
-    if (!gameBoard[column][i]) {
-      return checkLines({ column: 0, i: i - 1, gameBoard });
+  if (gameBoard[column][row] > 0 && gameBoard[column][row] < 9) {
+    if (column < gameBoard.length - 1)
+      return checkRow({ row, gameBoard, column: column + 1 });
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function dropLines({
+  row = new Error("You need row in droplines"),
+  column = 0,
+  gameBoard
+}) {
+  if (row > 0) {
+    gameBoard[column][row] = gameBoard[column][row - 1];
+    if (column === gameBoard.length - 1) {
+      return dropLines({ row: row - 1, gameBoard });
+    } else {
+      return dropLines({ row, column: column + 1, gameBoard });
     }
-    return checkLines({
-      column: 0,
-      i: i,
-      gameBoard: dropLines({
-        i: i - 1,
-        gameBoard: clearLine({ i: i, gameBoard })
-      })
-    });
-  } else if (gameBoard[column][i]) {
-    return checkLines({ column: column + 1, i, gameBoard });
   } else {
-    return checkLines({ column: 0, i: i - 1, gameBoard });
-  }
-}
-
-export function clearLine({ i, column = 0, gameBoard }) {
-  gameBoard[column][i] = 0;
-  if (column === gameBoard.length - 1) {
-    return gameBoard;
-  } else {
-    return clearLine({ i, column: column + 1, gameBoard });
-  }
-}
-
-export function dropLines({ column = 0, i = 0, gameBoard }) {
-  gameBoard[column][i + 1] = gameBoard[column][i];
-  if (i === 0 && column === gameBoard.length - 1) {
-    gameBoard[column][i] = 0;
-    return gameBoard;
-  } else if (i === 0) {
-    gameBoard[column][i] = 0;
-    return dropLines({ i, column: column + 1, gameBoard });
-  } else if (column === gameBoard.length - 1) {
-    return dropLines({ column: 0, i: i - 1, gameBoard });
-  } else {
-    return dropLines({ column: column + 1, i, gameBoard });
+    gameBoard[column][row] = 0;
+    if (column === gameBoard.length - 1) {
+      return gameBoard;
+    } else {
+      return dropLines({ row, column: column + 1, gameBoard });
+    }
   }
 }
