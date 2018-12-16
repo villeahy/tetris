@@ -1,5 +1,8 @@
 <template lang="html">
   <div :class="className">
+    <div>
+
+    </div>
   </div>
 </template>
 
@@ -35,12 +38,13 @@ export default {
   .block {
     height: 30px;
     width: 30px;
-    /*
-    -webkit-clip-path: polygon(2% 16%, 6% 3%, 19% 3%, 80% 3%, 97% 6%, 96% 31%, 97% 91%, 88% 98%, 64% 98%, 19% 97%, 6% 96%, 3% 91%);
-    clip-path: polygon(2% 16%, 6% 3%, 19% 3%, 80% 3%, 97% 6%, 96% 31%, 97% 91%, 88% 98%, 64% 98%, 19% 97%, 6% 96%, 3% 91%);
-    overflow: hidden;
-    */
-    border: 5px solid currentColor;
+    /*border: 5px solid currentColor;*/
+  }
+  .block div {
+    -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    background-color: currentColor;
+    height: 100%;
   }
 
  .red{
@@ -58,7 +62,8 @@ export default {
 
  .background{
    background: #b4b4b4;
-   border: 0.1px solid #ababab;
+   color: #ababab;
+   /* border: 0.1px solid #ababab; */
  }
 
  .blue {

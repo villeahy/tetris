@@ -61,7 +61,7 @@ export default class {
   }
 
   // Switch case should always end up with setting up block or calling newblock so it will emit actions to opponent
-  move({ type }) {
+  action({ type }) {
     switch (type) {
       case "ArrowLeft":
         console.log("left");

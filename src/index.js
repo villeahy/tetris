@@ -13,34 +13,34 @@ server.listen(port, () => {
 });
 
 // showing waiting room for testing
-app.get("/", function(req, res) {
+app.get("/", async (req, res) => {
   res.json(waitingRoom.waitingRoom);
 });
 
-io.on("connection", function(socket) {
+io.on("connection", async socket => {
   const game = new Game(socket);
   console.log("socket conncected");
 
   socket.emit("gameStatus", "joined");
 
   //listen for player actions and returns changes on owm board and emmits them for enemy
-  socket.on("action", (action, callback) => {
+  socket.on("action", async (action, callback) => {
     console.log("action");
-    callback(game.move(action));
+    callback(game.action(action));
   });
   //action for looking for new opponent
-  socket.on("newOpponent", () => {
+  socket.on("newOpponent", async () => {
     game.join(waitingRoom.joinGame(socket));
   });
   //tell opponent if you leave
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log("socket disconnected");
     waitingRoom.leaveLobby(game.room);
     io.to(game.room).emit("opponentLeft");
     socket.disconnect(true);
   });
   //if error leave and tell opponent
-  socket.on("error", () => {
+  socket.on("error", async () => {
     console.log("socket error");
     waitingRoom.leaveLobby(game.room);
     io.to(game.room).emit("opponentLeft");

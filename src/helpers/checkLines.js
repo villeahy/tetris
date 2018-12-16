@@ -15,7 +15,7 @@ export function checkLines({
     }
     return checkLines({
       column: 0,
-      i: i - 1,
+      i: i,
       gameBoard: dropLines({
         i: i - 1,
         gameBoard: clearLine({ i: i, gameBoard })
