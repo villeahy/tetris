@@ -9,6 +9,7 @@ export default class {
   constructor(socket) {
     this.socket = socket;
     this.status = "joined";
+    this.streak = 0;
     this.room;
     this._block = [];
     this._gameBoard = [];
@@ -121,6 +122,18 @@ export default class {
       this.setValues();
       const checked = checkLines(this.block, this.gameBoard);
       this.gameBoard = checked.gameBoard;
+      if (this.streak) {
+        if (checked.cleared) {
+          this.streak = this.streak + checked.cleared;
+        } else {
+          this.streak = 0;
+        }
+      } else {
+        if (checked.cleared > 1) {
+          this.streak = checked.cleared - 1;
+        }
+      }
+      console.log(this.streak);
       this.newBlock();
     } else {
       this.block = {

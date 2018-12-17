@@ -22,17 +22,23 @@ function makeTurns({ value, coords, turn }, turns, board) {
       fourth.row = fourth.row + turns.fourth[turn].row;
       fourth.column = fourth.column + turns.fourth[turn].column;
     }
-    return { coords: [first, second, third, fourth], turned: true };
+    return {
+      value,
+      coords,
+      turn: (turn + 1) % turns.first.length
+    };
   } catch (e) {
-    return { coords: [first, second, third, fourth], turned: false };
+    return {
+      value,
+      coords,
+      turn
+    };
   }
 }
 
 export function turnBlock(block, board) {
-  const { value, turn } = block;
   let turns;
-  let turnsAmount;
-  switch (value) {
+  switch (block.value) {
     case 2:
       console.log("turn block case 2");
       turns = {
@@ -61,7 +67,6 @@ export function turnBlock(block, board) {
           { row: 1, column: -1 }
         ]
       };
-      turnsAmount = 4;
       break;
     case 3:
       console.log("turn block case 3");
@@ -91,7 +96,6 @@ export function turnBlock(block, board) {
           { row: 0, column: -2 }
         ]
       };
-      turnsAmount = 4;
       break;
 
     case 4:
@@ -102,7 +106,6 @@ export function turnBlock(block, board) {
         third: [{ row: 0, column: 0 }, { row: 0, column: 0 }],
         fourth: [{ row: -2, column: 0 }, { row: 2, column: 0 }]
       };
-      turnsAmount = 2;
       break;
 
     case 5:
@@ -113,7 +116,6 @@ export function turnBlock(block, board) {
         third: [{ row: -2, column: 0 }, { row: 2, column: 0 }],
         fourth: [{ row: 0, column: 0 }, { row: 0, column: 0 }]
       };
-      turnsAmount = 2;
       break;
     case 6:
       console.log("turn block case 6");
@@ -123,7 +125,6 @@ export function turnBlock(block, board) {
         third: [{ row: 1, column: 3 }, { row: -1, column: -3 }],
         fourth: [{ row: 0, column: 0 }, { row: 0, column: 0 }]
       };
-      turnsAmount = 2;
       break;
     case 7:
       console.log("turn block case 7");
@@ -153,17 +154,11 @@ export function turnBlock(block, board) {
           { row: 0, column: 0 }
         ]
       };
-      turnsAmount = 4;
       break;
 
     default:
       console.log("turn block default");
       return block;
   }
-  const { turned, coords } = makeTurns(block, turns, board);
-  return {
-    value,
-    coords,
-    turn: turned ? (turn + 1) % turnsAmount : turn
-  };
+  return makeTurns(block, turns, board);
 }
