@@ -77,7 +77,7 @@ export default class {
         break;
       case "ArrowUp":
         console.log("arrowup");
-        this.block = turnBlock(this.block);
+        this.block = turnBlock(this.block, this.gameBoard);
         break;
       case "Init":
         this.gameBoard = emptyBoard;
