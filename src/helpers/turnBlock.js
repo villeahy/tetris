@@ -6,10 +6,8 @@ function makeTurns({ value, coords, turn }, turns, board) {
       coords.reduce((acc, obj, i) => {
         const column = obj.column + check[i][turn].column;
         const row = obj.row + check[i][turn].row;
-        if (column < 0 && column > board.length - 1) return false;
-        if (row < 0 && row > board[0].length - 1) return false;
+        if (typeof board[column][row] !== "number") return false;
         if (board[column][row] > 0) return false;
-        if (board[column][row] === undefined) return false;
         return acc;
       }, true)
     ) {
@@ -21,12 +19,18 @@ function makeTurns({ value, coords, turn }, turns, board) {
       third.column = third.column + turns.third[turn].column;
       fourth.row = fourth.row + turns.fourth[turn].row;
       fourth.column = fourth.column + turns.fourth[turn].column;
+      return {
+        value,
+        coords,
+        turn: (turn + 1) % turns.first.length
+      };
+    } else {
+      return {
+        value,
+        coords,
+        turn
+      };
     }
-    return {
-      value,
-      coords,
-      turn: (turn + 1) % turns.first.length
-    };
   } catch (e) {
     return {
       value,
