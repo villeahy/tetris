@@ -27,6 +27,7 @@ export default {
       this.ownBoard = board;
     },
     mainHandler: function({ code }) {
+      console.log(code);
       switch (code) {
         case "ArrowLeft":
           this.action(code);
@@ -40,13 +41,18 @@ export default {
         case "ArrowUp":
           this.action(code);
           break;
+        case "Space":
+          this.action(code);
+          break;
       }
     }
   },
   mounted() {
     document.addEventListener("keydown", this.mainHandler);
-    socket.on("action", board => {
-      this.opponentBoard = board;
+    socket.on("action", action => {
+      Object.keys(action).forEach(key => {
+        this[key] = action[key];
+      });
     });
     this.action("Init");
   },

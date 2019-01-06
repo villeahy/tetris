@@ -25,6 +25,8 @@ export default {
           return "purple";
         case 5:
           return "orange";
+        case 10:
+          return "ghost";
         default:
           return "yellow";
       }
@@ -51,6 +53,11 @@ export default {
   .background{
     background: #b4b4b4;
     color: #ababab;
+  }
+
+  .ghost {
+    background: #ababab;
+    color: #b4b4b4;
   }
 
  .red{

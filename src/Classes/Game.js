@@ -2,7 +2,8 @@ import {
   emptyBoard,
   blockGenerator,
   checkLines,
-  turnBlock
+  turnBlock,
+  checkDown
 } from "../helpers/index.js";
 
 export default class {
@@ -23,7 +24,7 @@ export default class {
   set block(block) {
     this._block = block;
     const [, room] = Object.keys(this.socket.rooms);
-    this.socket.to(room).emit("action", this.renderBoard);
+    this.socket.to(room).emit("action", { opponentBoard: this.renderBoard });
   }
 
   // remove mutating
@@ -41,11 +42,22 @@ export default class {
 
   get renderBoard() {
     const board = this.gameBoard;
+    const block = this.block;
+
+    while (!block.coords.reduce(checkDown(this.gameBoard), false)) {
+      for (var i = 0; i < block.coords.length; i++) {
+        block.coords[i].row++;
+      }
+    }
+    block.coords.forEach(obj => {
+      if (obj.row >= 0) {
+        board[obj.column][obj.row] = 10;
+      }
+    });
+
     this.block.coords.forEach(obj => {
       if (obj.row >= 0) {
-        if (board[obj.column][obj.row] !== 2) {
-          board[obj.column][obj.row] = this.block.value;
-        }
+        board[obj.column][obj.row] = this.block.value;
       }
     });
     return board;
@@ -80,7 +92,12 @@ export default class {
         console.log("arrowup");
         this.block = turnBlock(this.block, this.gameBoard);
         break;
+      case "Space":
+        console.log("space");
+        this.jumpDown();
+        break;
       case "Init":
+        console.log("init");
         this.gameBoard = emptyBoard;
         this.newBlock();
         break;
@@ -108,17 +125,7 @@ export default class {
   // this has to end with setting a block
   moveDown() {
     // checks if you can go down or have to set block and check lines
-    if (
-      this.block.coords.reduce((acc, obj) => {
-        if (obj.row < 0) return acc;
-        if (
-          this.gameBoard[obj.column][obj.row + 1] > 0 ||
-          this.gameBoard[obj.column][obj.row + 1] === undefined
-        )
-          return 1;
-        return acc;
-      }, 2) === 1
-    ) {
+    if (this.block.coords.reduce(checkDown(this.gameBoard), false)) {
       this.setValues();
       const checked = checkLines(this.block, this.gameBoard);
       this.gameBoard = checked.gameBoard;
@@ -141,6 +148,24 @@ export default class {
         coords: this.block.coords.map(obj => ({ ...obj, row: obj.row + 1 }))
       };
     }
+  }
+
+  jumpDown() {
+    let block = this.block;
+    const board = this.gameBoard;
+
+    while (!block.coords.reduce(checkDown(this.gameBoard), false)) {
+      block = {
+        ...block,
+        coords: block.coords.map(obj => ({ ...obj, row: obj.row + 1 }))
+      };
+    }
+
+    block.coords.forEach(obj => {
+      board[obj.column][obj.row] = block.value;
+    });
+    this.gameBoard = board;
+    this.newBlock();
   }
 
   moveSide(value) {
