@@ -16,15 +16,19 @@ export default {
   data() {
     return {
       ownBoard: [],
-      opponentBoard: []
+      ownStreak: 0,
+      opponentBoard: [],
+      opponentStreak: 0
     };
   },
   methods: {
     action: function(type) {
       socket.emit("action", { type }, this.callback);
     },
-    callback: function(board) {
-      this.ownBoard = board;
+    callback: function(data) {
+      Object.keys(data).forEach(key => {
+        this[key] = data[key];
+      });
     },
     mainHandler: function({ code }) {
       console.log(code);

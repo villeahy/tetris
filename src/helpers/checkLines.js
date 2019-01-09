@@ -10,9 +10,9 @@ export function checkLines(block, gameBoard) {
         gameBoard: clear.reduce((acc, row) => {
           return dropLines({ row, gameBoard });
         }, {}),
-        cleared: clear.length
+        streak: clear.length
       }
-    : { gameBoard, cleared: 0 };
+    : { gameBoard, streak: 0 };
 }
 
 function checkRow({

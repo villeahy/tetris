@@ -34,16 +34,11 @@ export default {
     if (socket.disconnected) {
       socket.connect();
     }
-    socket.on("opponentLeft", () => {
-      socket.emit("newOpponent", status => {
-        this.status = status;
-      });
-    });
     socket.on("gameStatus", status => {
       this.status = status;
     });
     socket.on("connect_error", error => {
-      console.log(error);
+      console.log("SOCKET ERROR!?!=!\n", error);
       this.status = "error";
       socket.disconnect();
     });
@@ -59,7 +54,7 @@ export default {
 
 html {
   background: linear-gradient(to bottom, #f9f9f9 0%, #d6d6d6 100%);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 #app {
