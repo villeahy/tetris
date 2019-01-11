@@ -11,8 +11,10 @@ export default class {
   constructor() {
     this.status = "joined";
     this.streak = 0;
+    this.timeout = 0;
     this._block = [];
     this._gameBoard = [];
+    this.callbacks;
   }
 
   set gameBoard(board) {
@@ -40,7 +42,7 @@ export default class {
     const board = this.gameBoard;
     const block = this.block;
     // adding ghost to board
-    while (!block.coords.reduce(checkDown(this.gameBoard), false)) {
+    while (!block.coords.reduce(checkDown(this.gameBoard), 0)) {
       for (var i = 0; i < block.coords.length; i++) {
         block.coords[i].row++;
       }
@@ -83,7 +85,6 @@ export default class {
       }
     });
   }
-
   // Switch case should always end up with setting up block or calling newblock so it will emit actions to opponent
   action({ type }) {
     switch (type) {
@@ -97,6 +98,10 @@ export default class {
         break;
       case "ArrowDown":
         console.log("arrowDown");
+        if (this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.callbacks(this.action({ type: "ArrowDown" }));
+        }, 750);
         this.setState(moveDown(this.block, this.gameBoard));
         break;
       case "ArrowUp":
@@ -105,11 +110,20 @@ export default class {
         break;
       case "Space":
         console.log("space");
+        if (this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.callbacks(this.action({ type: "ArrowDown" }));
+        }, 750);
         this.setState(moveDown(this.block, this.gameBoard, true));
+        break;
+      case "GameOver":
+        if (this.timeout) clearTimeout(this.timeout);
         break;
       case "Init":
         console.log("init");
-        this.gameBoard = emptyBoard;
+        this.timeout = setTimeout(() => {
+          this.callbacks(this.action({ type: "ArrowDown" }));
+        }, 750);
         this.setState({
           gameBoard: emptyBoard,
           block: blockGenerator(Math.floor(Math.random() * 7))

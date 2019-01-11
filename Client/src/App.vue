@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <landing-vue v-if="status === 'joined'" />
+    <landing-vue v-if="status === 'joined' || status ==='won'" />
     <loading-vue v-else-if="status === 'waiting'" />
     <game-vue v-else-if="status === 'ready'" />
     <error-vue v-else class="error" />

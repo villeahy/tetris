@@ -2,7 +2,7 @@ import { checkDown, checkLines, blockGenerator } from "./index";
 export function moveDown(block, board, jump) {
   // checks if you can go down or have to set block and check lines
   if (jump) {
-    while (!block.coords.reduce(checkDown(board), false)) {
+    while (!block.coords.reduce(checkDown(board), 0)) {
       block = {
         ...block,
         coords: block.coords.map(obj => ({ ...obj, row: obj.row + 1 }))
@@ -10,16 +10,16 @@ export function moveDown(block, board, jump) {
     }
   }
 
-  if (block.coords.reduce(checkDown(board), false)) {
+  if (block.coords.reduce(checkDown(board), 0)) {
     block.coords.forEach(obj => {
       board[obj.column][obj.row] = block.value;
     });
-    const checked = checkLines(block, board);
+    const { gameBoard, streak } = checkLines(block, board);
 
     return {
       block: blockGenerator(Math.floor(Math.random() * 7)),
-      gameBoard: checked.gameBoard,
-      streak: checked.streak
+      gameBoard,
+      streak
     };
   } else {
     return {

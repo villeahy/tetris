@@ -61,6 +61,7 @@ export default {
     this.action("Init");
   },
   destroyed() {
+    this.action("GameOver");
     document.removeEventListener("keydown", this.mainHandler);
   }
 };
