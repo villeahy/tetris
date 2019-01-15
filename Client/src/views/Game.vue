@@ -1,7 +1,18 @@
 <template lang="html">
   <div class="wrapper">
-    <gameboard-vue class="board" :board="ownBoard" />
-    <gameboard-vue class="board" :board="opponentBoard" />
+    <div>
+      <h1>You</h1>
+      <gameboard-vue class="board" :board="ownBoard" >
+        <template slot="streak"> {{ ownStreak }} </template>
+      </gameboard-vue>
+
+    </div>
+    <div>
+      <h1>Opponent</h1>
+      <gameboard-vue class="board" :board="opponentBoard">
+        <template slot="streak"> {{ opponentStreak }} </template>
+      </gameboard-vue>
+    </div>
   </div>
 </template>
 
@@ -73,12 +84,14 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-top: 40px;
 }
 
 .board {
-  margin-top: 70px;
   padding: 5px;
   background: #6a6a6a;
   border-radius: 5px;
+  position: relative;
 }
+
 </style>
