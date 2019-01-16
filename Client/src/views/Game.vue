@@ -86,7 +86,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin: 40px 0;
 }
 
 .board {
