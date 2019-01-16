@@ -19,6 +19,7 @@
 <script>
 import socket from "@/components/socket.js";
 import GameBoard from "@/components/GameBoard";
+
 export default {
   name: "game",
   components: {
@@ -29,7 +30,8 @@ export default {
       ownBoard: [],
       ownStreak: 0,
       opponentBoard: [],
-      opponentStreak: 0
+      opponentStreak: 0,
+      prevBlock: [[]],
     };
   },
   methods: {
@@ -84,13 +86,13 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 40px;
+  margin: 40px 0;
 }
 
 .board {
   padding: 5px;
   background: #6a6a6a;
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   position: relative;
 }
 

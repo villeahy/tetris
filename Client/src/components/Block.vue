@@ -38,8 +38,8 @@ export default {
 <style lang="css">
 
   .block {
-    height: 30px;
-    width: 30px;
+    height: 1em;
+    width: 1em;
     border: .1px solid currentColor;
   }
 
