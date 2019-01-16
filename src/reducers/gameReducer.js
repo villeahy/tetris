@@ -12,7 +12,8 @@ export default function(
       blockGenerator(Math.floor(Math.random() * 7)),
       blockGenerator(Math.floor(Math.random() * 7)),
       blockGenerator(Math.floor(Math.random() * 7))
-    ]
+    ],
+    updatedStates: ["block", "nextBlocks"]
   },
   action
 ) {
@@ -64,7 +65,8 @@ export default function(
           blockGenerator(Math.floor(Math.random() * 7)),
           blockGenerator(Math.floor(Math.random() * 7)),
           blockGenerator(Math.floor(Math.random() * 7))
-        ]
+        ],
+        updatedStates: ["block", "nextBlocks"]
       };
 
     default:

@@ -1,6 +1,6 @@
 import { checkLines } from "./index";
-import { blockGenerator, checkDown } from "../helpers";
-export function moveDown(state, jump) {
+import { blockGenerator, checkDown, updatedState } from "../helpers";
+function moveDown(state, jump) {
   let { block, gameBoard: board, nextBlocks, streak, clearedLines } = state;
   // checks if you can go down or have to set block and check lines
   if (jump) {
@@ -13,9 +13,12 @@ export function moveDown(state, jump) {
   }
 
   if (block.coords.reduce(checkDown(board), 0)) {
+    let gameOver = false;
     block.coords.forEach(obj => {
+      if (obj.row < 0) gameOver = true;
       board[obj.column][obj.row] = block.value;
     });
+    if (gameOver) return { status: "lost" };
     const { gameBoard, newStreak } = checkLines(block, board);
     const [first, ...rest] = nextBlocks;
     return {
@@ -34,3 +37,7 @@ export function moveDown(state, jump) {
     };
   }
 }
+
+const exportDown = (state, jump) => updatedState(moveDown(state, jump));
+
+export { exportDown as moveDown };

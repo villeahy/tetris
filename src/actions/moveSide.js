@@ -1,4 +1,6 @@
-export function moveSide(block, board, value) {
+import { updatedState } from "../helpers";
+
+function moveSide(block, board, value) {
   // figre out which side you are going
   const side = value === -1 ? 0 : board.length - 1;
   // chekcs if you can move side if not returns so function will be interupted
@@ -21,3 +23,6 @@ export function moveSide(block, board, value) {
     }
   };
 }
+const exportSide = (block, board, value) =>
+  updatedState(moveSide(block, board, value));
+export { exportSide as moveSide };

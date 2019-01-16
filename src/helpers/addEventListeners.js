@@ -10,32 +10,59 @@ const waitingRoom = createStore(roomReducer);
 const makeEmmits = (socket, game) => () => {
   const [, room] = Object.keys(socket.rooms);
   const state = game.getState();
+
   const board = renderBoard(state);
   const nextBlocks = state.nextBlocks.map(renderPreview);
-  socket.to(room).emit("action", {
-    status:
-      state.status === "running"
-        ? "running"
-        : state.status === "lost"
-        ? "won"
-        : "lost",
-    opponentBoard: board,
-    opponentNextBlocks: nextBlocks,
-    opponentStreak: state.streak,
-    opponentCL: state.clearedLines
-  });
-  socket.emit("action", {
-    status:
-      state.status === "running"
-        ? "running"
-        : state.status === "lost"
-        ? "lost"
-        : "won",
-    ownBoard: board,
-    ownNextBlocks: nextBlocks,
-    ownStreak: state.streak,
-    ownCL: state.clearedLines
-  });
+
+  const { opponent, own } = state.updatedStates.reduce(
+    (acc, key) => {
+      if (key === "block")
+        return {
+          own: { ...acc.own, ownBoard: board },
+          opponent: { ...acc.opponent, opponentBoard: board }
+        };
+      if (key === "streak")
+        return {
+          own: { ...acc.own, ownStreak: state.streak },
+          opponent: { ...acc.opponent, opponentStreak: state.streak }
+        };
+      if (key === "clearedLines")
+        return {
+          own: { ...acc.own, ownCL: state.clearedLines },
+          opponent: { ...acc.opponent, opponentCL: state.clearedLines }
+        };
+      if (key === "nextBlocks")
+        return {
+          own: { ...acc.own, ownNextBlocks: nextBlocks },
+          opponent: { ...acc.opponent, opponentNextBlocks: nextBlocks }
+        };
+      if (key === "status")
+        return {
+          own: {
+            ...acc.own,
+            status:
+              state.status === "running"
+                ? "running"
+                : state.status === "lost"
+                ? "lost"
+                : "won"
+          },
+          opponent: {
+            ...acc.opponent,
+            status:
+              state.status === "running"
+                ? "running"
+                : state.status === "lost"
+                ? "won"
+                : "lost"
+          }
+        };
+      return acc;
+    },
+    { own: {}, opponent: {} }
+  );
+  socket.to(room).emit("action", opponent);
+  socket.emit("action", own);
 };
 
 function addEventListeners(socket) {
