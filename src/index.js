@@ -1,10 +1,12 @@
 import express from "express";
 import { Server } from "http";
 import socketIO from "socket.io";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import Thunk from "redux-thunk";
 
-import Game from "./Classes/Game";
-import roomReducer from "./roomReducer";
+import { renderBoard, actionMaker, renderPreview } from "./helpers";
+import roomReducer from "./reducers/roomReducer";
+import gameReducer from "./reducers/gameReducer";
 
 const app = express();
 const server = Server(app);
@@ -13,13 +15,16 @@ const io = socketIO(server);
 const waitingRoom = createStore(roomReducer);
 const port = process.env.PORT || 3000;
 
-const makeCallbacks = (callback, socket) => updates => {
+const makeEmmits = (socket, game) => () => {
   const [, room] = Object.keys(socket.rooms);
-  const { board, streak } = updates;
-  socket
-    .to(room)
-    .emit("action", { opponentBoard: board, opponentStreak: streak });
-  socket.emit("action", { ownBoard: board, ownStreak: streak });
+  const state = game.getState();
+  const board = renderBoard(state);
+  const nextBlocks = state.nextBlocks.map(renderPreview);
+  socket.to(room).emit("action", {
+    opponentBoard: board,
+    opponentNextBlocks: nextBlocks
+  });
+  socket.emit("action", { ownBoard: board, ownNextBlocks: nextBlocks });
 };
 
 server.listen(port, () => {
@@ -32,19 +37,21 @@ app.get("/", async (req, res) => {
 });
 
 io.on("connection", async socket => {
-  const game = new Game();
-  let callbacks;
+  const game = createStore(gameReducer, applyMiddleware(Thunk));
+  let unsubscribe;
+  const actionTimeout = actionMaker();
+
   console.log("socket conncected");
 
   socket.emit("gameStatus", "joined");
 
-  //listen for player actions and returns changes on owm board and emmits them for enemy
+  //listen for player actions and emmits them for enemy and yourself
   socket.on("action", async (action, callback) => {
     if (action.type === "Init") {
-      callbacks = makeCallbacks(callback, socket);
-      game.callbacks = callbacks;
+      if (unsubscribe) unsubscribe();
+      unsubscribe = game.subscribe(makeEmmits(socket, game));
     }
-    callbacks(game.action(action));
+    game.dispatch(actionTimeout(action, actionTimeout));
   });
   //action for looking for new opponent
   socket.on("newOpponent", async () => {
@@ -72,7 +79,7 @@ io.on("connection", async socket => {
   //tell opponent if you leave
   socket.on("disconnect", async () => {
     console.log("disconnect");
-    game.action({ type: "GameOver" });
+    game.dispatch(actionTimeout({ type: "GameOver" }, actionTimeout));
     socket.eventNames().forEach(event => {
       socket.removeAllListeners(event);
     });
@@ -83,10 +90,6 @@ io.on("connection", async socket => {
     console.log("socket error");
     const [, room] = Object.keys(socket.rooms);
     waitingRoom.dispatch({ type: "leave", payload: room });
-
-    socket.eventNames().forEach(event => {
-      socket.removeAllListeners(event);
-    });
     socket.disconnect(true);
   });
 });

@@ -2,14 +2,14 @@
   <div class="wrapper">
     <div>
       <h1>You</h1>
-      <gameboard-vue class="board" :board="ownBoard" >
+      <gameboard-vue class="board" :board="ownBoard" :preview="ownNextBlocks" >
         <template slot="streak"> {{ ownStreak }} </template>
       </gameboard-vue>
 
     </div>
     <div>
       <h1>Opponent</h1>
-      <gameboard-vue class="board" :board="opponentBoard">
+      <gameboard-vue class="board" :board="opponentBoard" :preview="opponentNextBlocks">
         <template slot="streak"> {{ opponentStreak }} </template>
       </gameboard-vue>
     </div>
@@ -29,19 +29,15 @@ export default {
     return {
       ownBoard: [],
       ownStreak: 0,
+      ownNextBlocks: [],
       opponentBoard: [],
       opponentStreak: 0,
-      prevBlock: [[]],
+      opponentNextBlocks: []
     };
   },
   methods: {
     action: function(type) {
-      socket.emit("action", { type }, this.callback);
-    },
-    callback: function(data) {
-      Object.keys(data).forEach(key => {
-        this[key] = data[key];
-      });
+      socket.emit("action", { type });
     },
     mainHandler: function({ code }) {
       console.log(code);
@@ -67,6 +63,7 @@ export default {
   mounted() {
     document.addEventListener("keydown", this.mainHandler);
     socket.on("action", action => {
+      console.log(action);
       Object.keys(action).forEach(key => {
         this[key] = action[key];
       });
