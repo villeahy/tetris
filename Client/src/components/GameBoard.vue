@@ -4,7 +4,7 @@
         <block-vue class="block" v-for="(cell, index) in row" :key="index" :type="cell" />
       </div>
       <div class="streak">
-        <h1>STREAK</h1>
+        <h1>Streak</h1>
         <slot name="streak"></slot>
       </div>
       <div class="cl-count">
@@ -74,9 +74,8 @@ export default {
    font-size: 13px;
    position: absolute;
    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-   left: 37px;
    top: -25px;
-   text-align: left;
+   right: 0;
 
  }
 
@@ -100,9 +99,8 @@ export default {
  .streak h1 {
    font-size: 13px;
    position: absolute;
-   left: 42px;
+   right: 0;
    top: -25px;
-   text-align: left;
    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
  }
 
