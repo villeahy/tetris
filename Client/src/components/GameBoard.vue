@@ -10,18 +10,18 @@
       <div class="prev">
         <h1>NEXT</h1>
         <div class="prev-1">
-          <div class="column" :key="i" v-for="i in 4">
-            <block-vue class="block" v-for="index in 4" :key="index" :type="0" />
+          <div class="column" :key="i" v-for="(row, i) in preview[0]">
+            <block-vue class="block" v-for="(cell, index) in row" :key="index" :type="cell" />
           </div>
         </div>
         <div class="prev-2">
-          <div class="column" :key="i" v-for="i in 4">
-            <block-vue class="block" v-for="index in 4" :key="index" :type="0" />
+          <div class="column" :key="i" v-for="(row, i) in preview[1]">
+            <block-vue class="block" v-for="(cell, index) in row" :key="index" :type="cell" />
           </div>
         </div>
         <div class="prev-3">
-          <div class="column" :key="i" v-for="i in 4">
-            <block-vue class="block" v-for="index in 4" :key="index" :type="0" />
+          <div class="column" :key="i" v-for="(row, i) in preview[2]">
+            <block-vue class="block" v-for="(cell, index) in row" :key="index" :type="cell" />
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@ import Block from "./Block";
 export default {
   name: "gameboard",
   components: { "block-vue": Block },
-  props: ["board"]
+  props: ["board", "preview"]
 };
 </script>
 
