@@ -91,6 +91,7 @@ export default {
   background: #6a6a6a;
   border-radius: 5px 0 0 5px;
   position: relative;
+  line-height: 0;
 }
 
 </style>
