@@ -61,6 +61,7 @@ export default {
    padding: 5px 15px;
    padding-left: 25px;
    z-index: -1;
+   line-height: 1;
  }
 
  .streak h1 {
