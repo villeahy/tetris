@@ -7,6 +7,10 @@
         <h1>STREAK</h1>
         <slot name="streak"></slot>
       </div>
+      <div class="cl-count">
+        <h1>Cleared lines</h1>
+        <slot name="cl-count"></slot>
+      </div>
       <div class="prev">
         <h1>NEXT</h1>
         <div class="prev-1">
@@ -48,10 +52,38 @@ export default {
    display: inline-block;
  }
 
+ .cl-count {
+   position: absolute;
+   bottom: 130px;
+   right: -105px;
+   font-size: 50px;
+   font-weight: bold;
+   color: white;
+   border: 3px solid #6a6a6a;
+   border-radius: 5px;
+   background: #9b9b9b;
+   padding: 5px 10px;
+   z-index: -1;
+   line-height: 1;
+   color: lightgreen;
+   text-align: right;
+   padding-left: 100px;
+ }
+
+ .cl-count h1 {
+   font-size: 13px;
+   position: absolute;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+   left: 37px;
+   top: -25px;
+   text-align: left;
+
+ }
+
  .streak {
    position: absolute;
    bottom: 0;
-   right: -60px;
+   right: -105px;
    font-size: 50px;
    font-weight: bold;
    color: white;
@@ -59,17 +91,18 @@ export default {
    border-radius: 5px;
    background: #9b9b9b;
    padding: 5px 15px;
-   padding-left: 25px;
+   padding-left: 100px;
    z-index: -1;
    line-height: 1;
+   color: lightblue;
  }
 
  .streak h1 {
    font-size: 13px;
    position: absolute;
-   top: -26px;
-   left: 12px;
-   color: lightblue;
+   left: 42px;
+   top: -25px;
+   text-align: left;
    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
  }
 

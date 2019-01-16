@@ -4,6 +4,7 @@
       <h1>You</h1>
       <gameboard-vue class="board" :board="ownBoard" :preview="ownNextBlocks" >
         <template slot="streak"> {{ ownStreak }} </template>
+        <template slot="cl-count"> {{ ownCL }} </template>
       </gameboard-vue>
 
     </div>
@@ -11,6 +12,7 @@
       <h1>Opponent</h1>
       <gameboard-vue class="board" :board="opponentBoard" :preview="opponentNextBlocks">
         <template slot="streak"> {{ opponentStreak }} </template>
+        <template slot="cl-count"> {{ opponentCL }} </template>
       </gameboard-vue>
     </div>
   </div>
