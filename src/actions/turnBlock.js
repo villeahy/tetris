@@ -1,3 +1,5 @@
+import { updatedState } from "../helpers";
+
 function makeTurns({ value, coords, turn }, turns, board) {
   const [first, second, third, fourth] = coords;
   const check = Object.values(turns);
@@ -47,7 +49,7 @@ function makeTurns({ value, coords, turn }, turns, board) {
   }
 }
 
-export function turnBlock(block, board) {
+function turnBlock(block, board) {
   let turns;
   switch (block.value) {
     case 2:
@@ -173,3 +175,5 @@ export function turnBlock(block, board) {
   }
   return makeTurns(block, turns, board);
 }
+const exportTurn = (block, board) => updatedState(turnBlock(block, board));
+export { exportTurn as turnBlock };
