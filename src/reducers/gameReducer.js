@@ -1,14 +1,11 @@
-import {
-  moveDown,
-  moveSide,
-  turnBlock,
-  emptyBoard,
-  blockGenerator
-} from "../helpers/";
+import { emptyBoard, blockGenerator } from "../helpers/";
+import { moveDown, moveSide, turnBlock } from "../actions/";
 
 export default function(
   state = {
-    tetrisTimeout: 0,
+    status: "running",
+    streak: 0,
+    clearedLines: 0,
     gameBoard: emptyBoard(),
     block: blockGenerator(Math.floor(Math.random() * 7)),
     nextBlocks: [
@@ -38,13 +35,13 @@ export default function(
       console.log("arrowDown");
       return {
         ...state,
-        ...moveDown(state.block, state.gameBoard, state.nextBlocks)
+        ...moveDown(state)
       };
     case "Space":
       console.log("space");
       return {
         ...state,
-        ...moveDown(state.block, state.gameBoard, state.nextBlocks, true)
+        ...moveDown(state, true)
       };
 
     case "ArrowUp":
@@ -58,7 +55,9 @@ export default function(
     case "Init":
       console.log("init");
       return {
-        tetrisTimeout: 0,
+        status: "running",
+        streak: 0,
+        clearedLines: 0,
         gameBoard: emptyBoard(),
         block: blockGenerator(Math.floor(Math.random() * 7)),
         nextBlocks: [

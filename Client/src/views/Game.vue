@@ -27,11 +27,14 @@ export default {
   },
   data() {
     return {
+      status: "running",
       ownBoard: [],
       ownStreak: 0,
+      ownCL: 0,
       ownNextBlocks: [],
       opponentBoard: [],
       opponentStreak: 0,
+      opponentCL: 0,
       opponentNextBlocks: []
     };
   },
@@ -40,7 +43,6 @@ export default {
       socket.emit("action", { type });
     },
     mainHandler: function({ code }) {
-      console.log(code);
       switch (code) {
         case "ArrowLeft":
           this.action(code);
@@ -63,7 +65,6 @@ export default {
   mounted() {
     document.addEventListener("keydown", this.mainHandler);
     socket.on("action", action => {
-      console.log(action);
       Object.keys(action).forEach(key => {
         this[key] = action[key];
       });

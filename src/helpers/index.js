@@ -1,10 +1,7 @@
 export { emptyBoard } from "./board";
-export { moveDown } from "./moveDown";
-export { moveSide } from "./moveSide";
-export { turnBlock } from "./turnBlock";
 export { checkDown } from "./checkDown";
-export { checkLines } from "./checkLines";
 export { actionMaker } from "./actionMaker";
 export { renderBoard } from "./renderBoard";
 export { renderPreview } from "./renderPreview";
 export { blockGenerator } from "./blockGenerator";
+export { addEventListeners } from "./addEventListeners";
