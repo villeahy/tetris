@@ -68,6 +68,7 @@ export default {
    color: lightgreen;
    text-align: right;
    padding-left: 100px;
+   background: #6a6a6a;
  }
 
  .cl-count h1 {
@@ -88,12 +89,12 @@ export default {
    color: white;
    border: 3px solid #6a6a6a;
    border-radius: 5px;
-   background: #9b9b9b;
    padding: 5px 15px;
    padding-left: 100px;
-   z-index: -1;
+   z-index: -2;
    line-height: 1;
    color: lightblue;
+   background: #6a6a6a;
  }
 
  .streak h1 {
@@ -110,14 +111,10 @@ export default {
    top: 25px;
    border: 5px solid #6a6a6a;
    right: -105px;
-
- }
-
- .prev {
    line-height: 0;
    background:  #6a6a6a;
-   opacity: 0.8;
    border-radius: 0px 5px 5px 0;
+   z-index: -1;
  }
 
  .prev-1, .prev-2  {
@@ -132,6 +129,5 @@ export default {
    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
    font-size: 20px;
  }
-
 
 </style>

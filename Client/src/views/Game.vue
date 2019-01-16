@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="wrapper">
+    <div v-if="status === 'won' || status === 'lost'" id="page-mask"></div>
     <div>
       <h1>You</h1>
       <gameboard-vue class="board" :board="ownBoard" :preview="ownNextBlocks" >
@@ -14,6 +15,12 @@
         <template slot="streak"> {{ opponentStreak }} </template>
         <template slot="cl-count"> {{ opponentCL }} </template>
       </gameboard-vue>
+    </div>
+    <div v-if="status === 'won'" class="won">
+      <h1>YOU WON!</h1>
+    </div>
+    <div v-if="status === 'lost'"class="lost">
+      <h1>YOU LOST!</h1>
     </div>
   </div>
 </template>
@@ -94,6 +101,39 @@ export default {
   border-radius: 5px 0 0 5px;
   position: relative;
   line-height: 0;
+  z-index: -1;
+}
+
+.won, .lost {
+  position: absolute;
+  z-index: 1;
+  top: 30vh;
+  padding: 150px;
+  border-radius: 20px;
+}
+
+.won h1, .lost h1 {
+  margin: 0;
+}
+
+.won {
+  background: lightgreen;
+  color: green;
+
+}
+
+.lost {
+  background: #ff6666;
+  color: darkred;
+}
+
+#page-mask {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 </style>
