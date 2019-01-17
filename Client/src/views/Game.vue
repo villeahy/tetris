@@ -68,7 +68,12 @@ export default {
     document.addEventListener("keydown", this.mainHandler);
     socket.on("action", action => {
       Object.keys(action).forEach(key => {
-        this[key] = action[key];
+        if (key !== "event") {
+          this[key] = action[key];
+        } else {
+          if (this.status === "running")
+            socket.emit("action", { type: "GameOver", payload: action[key] });
+        }
       });
     });
     this.action("Init");

@@ -1,6 +1,7 @@
 const actionMaker = () => {
   let timeout;
   return (action, thisActionMaker) => dispatch => {
+    console.log(action.type);
     if (
       action.type === "ArrowDown" ||
       action.type === "Space" ||

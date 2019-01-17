@@ -7,7 +7,7 @@ import roomReducer from "../reducers/roomReducer";
 
 const waitingRoom = createStore(roomReducer);
 
-const makeEmmits = (socket, game) => () => {
+const makeEmmits = (socket, game, actionTimeout) => () => {
   const [, room] = Object.keys(socket.rooms);
   const state = game.getState();
 
@@ -36,20 +36,15 @@ const makeEmmits = (socket, game) => () => {
           own: { ...acc.own, ownNextBlocks: nextBlocks },
           opponent: { ...acc.opponent, opponentNextBlocks: nextBlocks }
         };
-      if (key === "status")
+      if (key === "status") {
         return {
           own: {
             ...acc.own,
-            status:
-              state.status === "running"
-                ? "running"
-                : state.status === "lost"
-                ? "lost"
-                : "won"
+            event: state.status
           },
           opponent: {
             ...acc.opponent,
-            status:
+            event:
               state.status === "running"
                 ? "running"
                 : state.status === "lost"
@@ -57,6 +52,7 @@ const makeEmmits = (socket, game) => () => {
                 : "lost"
           }
         };
+      }
       return acc;
     },
     { own: {}, opponent: {} }
@@ -78,7 +74,7 @@ function addEventListeners(socket) {
   socket.on("action", async (action, callback) => {
     if (action.type === "Init") {
       if (unsubscribe) unsubscribe();
-      unsubscribe = game.subscribe(makeEmmits(socket, game));
+      unsubscribe = game.subscribe(makeEmmits(socket, game, actionTimeout));
     }
     game.dispatch(actionTimeout(action, actionTimeout));
   });
