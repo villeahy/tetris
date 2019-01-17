@@ -1,7 +1,6 @@
 const actionMaker = () => {
   let timeout;
   return (action, thisActionMaker) => dispatch => {
-    console.log(action.type);
     if (
       action.type === "ArrowDown" ||
       action.type === "Space" ||
@@ -12,6 +11,7 @@ const actionMaker = () => {
         dispatch(thisActionMaker({ type: "ArrowDown" }, thisActionMaker));
       }, 750);
     } else if (action.type === "GameOver") {
+      console.log("timeout cleared");
       clearTimeout(timeout);
     }
 

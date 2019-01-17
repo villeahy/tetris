@@ -52,7 +52,7 @@ export default function(
         ...turnBlock(state.block, state.gameBoard)
       };
     case "GameOver":
-      return { ...state, status: payload };
+      return { ...state };
     case "Init":
       console.log("init");
       return {

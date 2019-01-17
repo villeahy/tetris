@@ -40,11 +40,11 @@ const makeEmmits = (socket, game, actionTimeout) => () => {
         return {
           own: {
             ...acc.own,
-            event: state.status
+            status: state.status
           },
           opponent: {
             ...acc.opponent,
-            event:
+            status:
               state.status === "running"
                 ? "running"
                 : state.status === "lost"
@@ -76,6 +76,7 @@ function addEventListeners(socket) {
       if (unsubscribe) unsubscribe();
       unsubscribe = game.subscribe(makeEmmits(socket, game, actionTimeout));
     }
+    if (action.type === "GameOver") unsubscribe();
     game.dispatch(actionTimeout(action, actionTimeout));
   });
   //action for looking for new opponent

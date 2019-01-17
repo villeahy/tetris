@@ -19,7 +19,7 @@
     <div v-if="status === 'won'" class="won">
       <h1>YOU WON!</h1>
     </div>
-    <div v-if="status === 'lost'"class="lost">
+    <div v-if="status === 'lost'" class="lost">
       <h1>YOU LOST!</h1>
     </div>
   </div>
@@ -75,11 +75,10 @@ export default {
     document.addEventListener("keydown", this.mainHandler);
     socket.on("action", action => {
       Object.keys(action).forEach(key => {
-        if (key !== "event") {
-          this[key] = action[key];
-        } else {
-          if (this.status === "running")
-            socket.emit("action", { type: "GameOver", payload: action[key] });
+        this[key] = action[key];
+        if (action[key] === "won" || action[key] === "lost") {
+          this.action("GameOver");
+          document.removeEventListener("keydown", this.mainHandler);
         }
       });
     });
